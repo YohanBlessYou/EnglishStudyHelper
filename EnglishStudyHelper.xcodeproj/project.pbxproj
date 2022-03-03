@@ -19,6 +19,7 @@
 		604A949B27D06A8A007CCCD5 /* SentenceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604A949A27D06A8A007CCCD5 /* SentenceViewModel.swift */; };
 		604A94A127D06FA7007CCCD5 /* StudyingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604A94A027D06FA7007CCCD5 /* StudyingViewController.swift */; };
 		604A94A327D074BB007CCCD5 /* SimpleSquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604A94A227D074BB007CCCD5 /* SimpleSquareView.swift */; };
+		604A94A527D09630007CCCD5 /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604A94A427D09630007CCCD5 /* UIAlertController+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		604A949A27D06A8A007CCCD5 /* SentenceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentenceViewModel.swift; sourceTree = "<group>"; };
 		604A94A027D06FA7007CCCD5 /* StudyingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyingViewController.swift; sourceTree = "<group>"; };
 		604A94A227D074BB007CCCD5 /* SimpleSquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleSquareView.swift; sourceTree = "<group>"; };
+		604A94A427D09630007CCCD5 /* UIAlertController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 				604A94A027D06FA7007CCCD5 /* StudyingViewController.swift */,
 				604A948927CFE5AD007CCCD5 /* SentenceAddingViewController.swift */,
 				604A94A227D074BB007CCCD5 /* SimpleSquareView.swift */,
+				604A94A427D09630007CCCD5 /* UIAlertController+Extension.swift */,
 				604A948B27CFEEC4007CCCD5 /* UITextView+Extension.swift */,
 			);
 			path = View;
@@ -189,6 +192,7 @@
 			files = (
 				604A948A27CFE5AD007CCCD5 /* SentenceAddingViewController.swift in Sources */,
 				600B8EC227CFDC68002ADF4E /* MainViewController.swift in Sources */,
+				604A94A527D09630007CCCD5 /* UIAlertController+Extension.swift in Sources */,
 				604A948F27D06927007CCCD5 /* Sentence.xcdatamodeld in Sources */,
 				604A949B27D06A8A007CCCD5 /* SentenceViewModel.swift in Sources */,
 				600B8EBE27CFDC68002ADF4E /* AppDelegate.swift in Sources */,

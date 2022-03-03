@@ -25,14 +25,10 @@ class SentenceAddingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        initialize()
-    }
-    
-    private func initialize() {
         initAppearance()
         initAction()
     }
-    
+
     private func initAppearance() {
         view.backgroundColor = .systemBackground
         
@@ -59,12 +55,14 @@ class SentenceAddingViewController: UIViewController {
     
     @objc private func addSentence() {
         guard koreanView.textView.isOnlyKorean else {
+            UIAlertController.Basic.warning(target: self, message: "한국어 입력이 잘못되었습니다")
             return
         }
         guard englishView.textView.isOnlyEnglish else {
+            UIAlertController.Basic.warning(target: self, message: "영어 입력이 잘못되었습니다")
             return
         }
         SentenceDataManager.shared.create(korean: koreanView.textView.text, english: englishView.textView.text)
-        print(SentenceDataManager.shared.read())
+        dismiss(animated: true)
     }
 }
