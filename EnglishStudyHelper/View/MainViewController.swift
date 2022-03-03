@@ -23,10 +23,10 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initViewController()
+        initialize()
     }
     
-    private func initViewController() {
+    private func initialize() {
         initAppearance()
         initAction()
     }
@@ -49,7 +49,12 @@ class MainViewController: UIViewController {
     }
     
     private func initAction() {
+        startButton.addTarget(self, action: #selector(presentStudyingVC), for: .touchUpInside)
         addButton.addTarget(self, action: #selector(presentSentenceAddingVC), for: .touchUpInside)
+    }
+    
+    @objc private func presentStudyingVC() {
+        navigationController?.pushViewController(StudyingViewController(), animated: true)
     }
     
     @objc private func presentSentenceAddingVC() {

@@ -62,10 +62,10 @@ class SentenceAddingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        initViewController()
+        initialize()
     }
     
-    private func initViewController() {
+    private func initialize() {
         initAppearance()
         initAction()
     }
@@ -105,5 +105,7 @@ class SentenceAddingViewController: UIViewController {
         guard englishTextView.isOnlyEnglish else {
             return
         }
+        SentenceDataManager.shared.create(korean: koreanTextView.text, english: englishTextView.text)
+        print(SentenceDataManager.shared.read())
     }
 }

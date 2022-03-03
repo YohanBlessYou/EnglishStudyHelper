@@ -14,6 +14,11 @@
 		600B8ECA27CFDC69002ADF4E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 600B8EC827CFDC69002ADF4E /* LaunchScreen.storyboard */; };
 		604A948A27CFE5AD007CCCD5 /* SentenceAddingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604A948927CFE5AD007CCCD5 /* SentenceAddingViewController.swift */; };
 		604A948C27CFEEC4007CCCD5 /* UITextView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604A948B27CFEEC4007CCCD5 /* UITextView+Extension.swift */; };
+		604A948F27D06927007CCCD5 /* Sentence.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 604A948D27D06927007CCCD5 /* Sentence.xcdatamodeld */; };
+		604A949127D06983007CCCD5 /* SentenceDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604A949027D06983007CCCD5 /* SentenceDataManager.swift */; };
+		604A949B27D06A8A007CCCD5 /* SentenceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604A949A27D06A8A007CCCD5 /* SentenceViewModel.swift */; };
+		604A94A127D06FA7007CCCD5 /* StudyingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604A94A027D06FA7007CCCD5 /* StudyingViewController.swift */; };
+		604A94A327D074BB007CCCD5 /* SimpleSquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604A94A227D074BB007CCCD5 /* SimpleSquareView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +31,11 @@
 		600B8ECB27CFDC69002ADF4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		604A948927CFE5AD007CCCD5 /* SentenceAddingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentenceAddingViewController.swift; sourceTree = "<group>"; };
 		604A948B27CFEEC4007CCCD5 /* UITextView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extension.swift"; sourceTree = "<group>"; };
+		604A948E27D06927007CCCD5 /* Sentence.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Sentence.xcdatamodel; sourceTree = "<group>"; };
+		604A949027D06983007CCCD5 /* SentenceDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentenceDataManager.swift; sourceTree = "<group>"; };
+		604A949A27D06A8A007CCCD5 /* SentenceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentenceViewModel.swift; sourceTree = "<group>"; };
+		604A94A027D06FA7007CCCD5 /* StudyingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyingViewController.swift; sourceTree = "<group>"; };
+		604A94A227D074BB007CCCD5 /* SimpleSquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleSquareView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,16 +68,53 @@
 		600B8EBC27CFDC68002ADF4E /* EnglishStudyHelper */ = {
 			isa = PBXGroup;
 			children = (
-				600B8EBD27CFDC68002ADF4E /* AppDelegate.swift */,
-				600B8EBF27CFDC68002ADF4E /* SceneDelegate.swift */,
-				604A948B27CFEEC4007CCCD5 /* UITextView+Extension.swift */,
-				600B8EC127CFDC68002ADF4E /* MainViewController.swift */,
-				604A948927CFE5AD007CCCD5 /* SentenceAddingViewController.swift */,
+				604A949F27D06ACC007CCCD5 /* ViewModel */,
+				604A949E27D06AB0007CCCD5 /* Model */,
+				604A949D27D06AA0007CCCD5 /* View */,
+				604A949C27D06A93007CCCD5 /* Application */,
 				600B8EC627CFDC69002ADF4E /* Assets.xcassets */,
 				600B8EC827CFDC69002ADF4E /* LaunchScreen.storyboard */,
 				600B8ECB27CFDC69002ADF4E /* Info.plist */,
 			);
 			path = EnglishStudyHelper;
+			sourceTree = "<group>";
+		};
+		604A949C27D06A93007CCCD5 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				600B8EBD27CFDC68002ADF4E /* AppDelegate.swift */,
+				600B8EBF27CFDC68002ADF4E /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		604A949D27D06AA0007CCCD5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				600B8EC127CFDC68002ADF4E /* MainViewController.swift */,
+				604A94A027D06FA7007CCCD5 /* StudyingViewController.swift */,
+				604A948927CFE5AD007CCCD5 /* SentenceAddingViewController.swift */,
+				604A94A227D074BB007CCCD5 /* SimpleSquareView.swift */,
+				604A948B27CFEEC4007CCCD5 /* UITextView+Extension.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		604A949E27D06AB0007CCCD5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				604A949027D06983007CCCD5 /* SentenceDataManager.swift */,
+				604A948D27D06927007CCCD5 /* Sentence.xcdatamodeld */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		604A949F27D06ACC007CCCD5 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				604A949A27D06A8A007CCCD5 /* SentenceViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,9 +189,14 @@
 			files = (
 				604A948A27CFE5AD007CCCD5 /* SentenceAddingViewController.swift in Sources */,
 				600B8EC227CFDC68002ADF4E /* MainViewController.swift in Sources */,
+				604A948F27D06927007CCCD5 /* Sentence.xcdatamodeld in Sources */,
+				604A949B27D06A8A007CCCD5 /* SentenceViewModel.swift in Sources */,
 				600B8EBE27CFDC68002ADF4E /* AppDelegate.swift in Sources */,
+				604A94A327D074BB007CCCD5 /* SimpleSquareView.swift in Sources */,
+				604A949127D06983007CCCD5 /* SentenceDataManager.swift in Sources */,
 				604A948C27CFEEC4007CCCD5 /* UITextView+Extension.swift in Sources */,
 				600B8EC027CFDC68002ADF4E /* SceneDelegate.swift in Sources */,
+				604A94A127D06FA7007CCCD5 /* StudyingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,6 +410,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		604A948D27D06927007CCCD5 /* Sentence.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				604A948E27D06927007CCCD5 /* Sentence.xcdatamodel */,
+			);
+			currentVersion = 604A948E27D06927007CCCD5 /* Sentence.xcdatamodel */;
+			path = Sentence.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 600B8EB227CFDC68002ADF4E /* Project object */;
 }
