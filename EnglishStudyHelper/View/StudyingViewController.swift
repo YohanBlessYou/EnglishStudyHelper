@@ -2,7 +2,7 @@ import UIKit
 
 class StudyingViewController: UIViewController {
 
-    private var sentences = SentenceViewModel()
+    private var sentenceViewModel = SentenceViewModel()
     private let koreanView = SimpleSquareView(title: "한국어 문장", isEditable: false)
     private let englishView = SimpleSquareView(title: "영어 문장", isEditable: false)
     private let stackView: UIStackView = {
@@ -16,15 +16,10 @@ class StudyingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        initialize()
-    }
-    
-    private func initialize() {
         initAppearance()
-//        initAction()
+        initAction()
     }
-    
+
     private func initAppearance() {
         view.backgroundColor = .systemBackground
         
@@ -37,5 +32,13 @@ class StudyingViewController: UIViewController {
             stackView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.9),
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
+    }
+    
+    private func initAction() {
+        sentenceViewModel.addAction { [weak self] sentence in
+            self?.koreanView.textView.text = sentence.korean
+            self?.englishView.textView.text = sentence.english
+        }
+        sentenceViewModel.toNext()
     }
 }
