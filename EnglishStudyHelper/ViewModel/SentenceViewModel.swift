@@ -1,39 +1,42 @@
 import Foundation
 
-struct SentenceViewModel {
-    private var sentenceActions: [(Sentence) -> ()] = []
-    private var solutionHiddenActions: [(Bool) -> ()] = []
+class SentenceViewModel {
+    var currentSentenceActions: [(Sentence) -> ()] = []
+    var solutionIsHiddenActions: [(Bool) -> ()] = []
+    var sentencesActions: [() -> ()] = []
+    
     private var currentSentence: Sentence? {
         didSet {
             guard let sentence = currentSentence else {
                 return
             }
-            sentenceActions.forEach {
+            currentSentenceActions.forEach {
                 $0(sentence)
             }
         }
     }
     var solutionIsHidden: Bool = true {
         didSet {
-            solutionHiddenActions.forEach {
+            solutionIsHiddenActions.forEach {
                 $0(solutionIsHidden)
             }
         }
     }
-    private let sentences = SentenceDataManager.shared.read()
-
-    mutating func addAction(sentenceAction: ((Sentence) -> ())?, solutionHiddenAction: ((Bool) -> ())?) {
-        if let sentenceAction = sentenceAction {
-            sentenceActions.append(sentenceAction)
-        }
-        
-        if let solutionHiddenAction = solutionHiddenAction {
-            solutionHiddenActions.append(solutionHiddenAction)
+    var sentences = SentenceDataManager.shared.read() {
+        didSet {
+            sentencesActions.forEach {
+                $0()
+            }
         }
     }
     
-    mutating func toNext() {
+    func toNext() {
         currentSentence = sentences.randomElement()
         solutionIsHidden = true
+    }
+    
+    func deleteSentence(id: String) {
+        SentenceDataManager.shared.delete(id: id)
+        sentences = SentenceDataManager.shared.read()
     }
 }

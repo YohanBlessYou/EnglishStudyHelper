@@ -1,7 +1,6 @@
 import UIKit
 
 class StudyingViewController: UIViewController {
-
     private var sentenceViewModel = SentenceViewModel()
     private let koreanView: SimpleSquareView = {
         let view = SimpleSquareView(title: "한국어 문장", isEditable: false)
@@ -65,19 +64,27 @@ class StudyingViewController: UIViewController {
     }
     
     private func registerAction() {
-        sentenceViewModel.addAction { [weak self] sentence in
+        sentenceViewModel.currentSentenceActions.append({ [weak self] sentence in
             self?.koreanView.textView.text = sentence.korean
             self?.englishView.textView.text = sentence.english
-        } solutionHiddenAction: { [weak self] isHidden in
+        })
+        sentenceViewModel.solutionIsHiddenActions.append({ [weak self] isHidden in
             if isHidden {
                 self?.englishView.textView.textColor = self?.englishView.textView.backgroundColor
             } else {
                 self?.englishView.textView.textColor = .label
             }
-        }
-        
+        })
+
         showSolutionButton.addTarget(self, action: #selector(toggleSolutionHiding), for: .touchUpInside)
         nextButton.addTarget(self, action: #selector(updateNextSentence), for: .touchUpInside)
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "ellipsis.circle"),
+            style: .plain,
+            target: self,
+            action: #selector(presentOption)
+        )
     }
     
     @objc private func toggleSolutionHiding() {
@@ -86,6 +93,23 @@ class StudyingViewController: UIViewController {
     
     @objc private func updateNextSentence() {
         sentenceViewModel.toNext()
+    }
+    
+    @objc private func presentOption() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let updateAction = UIAlertAction(title: "수정", style: .default) { _ in
+            let updateVC = SentenceEditingViewController()
+            let navigationVC = UINavigationController(rootViewController: updateVC)
+            self.present(navigationVC, animated: true)
+        }
+        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { _ in
+            
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alert.addAction(updateAction)
+        alert.addAction(deleteAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
     }
     
     private func initState() {
