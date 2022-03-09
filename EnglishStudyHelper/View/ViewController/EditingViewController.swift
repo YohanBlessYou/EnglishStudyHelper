@@ -46,6 +46,12 @@ extension EditingViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
+        
+        let backgroundView = UIView()
+        backgroundView.layer.cornerRadius = 10
+        backgroundView.backgroundColor = .systemBlue
+        cell.selectedBackgroundView = backgroundView
+        
         var configuration = cell.defaultContentConfiguration()
         configuration.text = SentenceViewModel.shared.sentences[indexPath.row].korean
         cell.contentConfiguration = configuration
@@ -53,6 +59,8 @@ extension EditingViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let editingAction = UIAlertAction(title: "수정", style: .default) { [weak self] _ in
             let updatingVC = UpdatingViewController()
