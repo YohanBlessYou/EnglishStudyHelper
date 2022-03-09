@@ -1,9 +1,28 @@
 import Foundation
 
 class SentenceViewModel {
+    static let shared = SentenceViewModel()
+    
     var currentSentenceActions: [(Sentence) -> ()] = []
     var solutionIsHiddenActions: [(Bool) -> ()] = []
     var sentencesActions: [() -> ()] = []
+    
+    var solutionIsHidden: Bool = true {
+        didSet {
+            solutionIsHiddenActions.forEach {
+                $0(solutionIsHidden)
+            }
+        }
+    }
+    lazy var sentences = sentenceDataManager.read() {
+        didSet {
+            sentencesActions.forEach {
+                $0()
+            }
+        }
+    }
+    
+    private let sentenceDataManager = SentenceDataManager()
     
     private var currentSentence: Sentence? {
         didSet {
@@ -15,19 +34,13 @@ class SentenceViewModel {
             }
         }
     }
-    var solutionIsHidden: Bool = true {
-        didSet {
-            solutionIsHiddenActions.forEach {
-                $0(solutionIsHidden)
-            }
-        }
-    }
-    var sentences = SentenceDataManager.shared.read() {
-        didSet {
-            sentencesActions.forEach {
-                $0()
-            }
-        }
+    
+    private init() { }
+    
+    func sentence(fromId id: String) -> Sentence? {
+        sentences.filter {
+            $0.id == id
+        }.first
     }
     
     func toNext() {
@@ -35,8 +48,18 @@ class SentenceViewModel {
         solutionIsHidden = true
     }
     
-    func deleteSentence(id: String) {
-        SentenceDataManager.shared.delete(id: id)
-        sentences = SentenceDataManager.shared.read()
+    func onCreate(korean: String, english: String) {
+        sentenceDataManager.create(korean: korean, english: english)
+        sentences = sentenceDataManager.read()
+    }
+    
+    func onUpdate(id: String, korean: String, english: String) {
+        sentenceDataManager.update(id: id, korean: korean, english: english)
+        sentences = sentenceDataManager.read()
+    }
+    
+    func onDelete(id: String) {
+        sentenceDataManager.delete(id: id)
+        sentences = sentenceDataManager.read()
     }
 }

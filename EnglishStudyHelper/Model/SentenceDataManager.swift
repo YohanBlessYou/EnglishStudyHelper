@@ -2,8 +2,6 @@ import Foundation
 import CoreData
 
 class SentenceDataManager {
-    static let shared = SentenceDataManager()
-    
     private let persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Sentence")
         container.loadPersistentStores(completionHandler: { (_, error) in
@@ -14,9 +12,7 @@ class SentenceDataManager {
         
         return container
     }()
-    
-    private init() { }
-    
+
     func create(korean: String, english: String) {
         let sentence = Sentence(context: persistentContainer.viewContext)
         sentence.id = UUID().uuidString
@@ -31,9 +27,9 @@ class SentenceDataManager {
         return sentences ?? []
     }
     
-    func update(uuid: UUID, korean: String, english: String) {
+    func update(id: String, korean: String, english: String) {
         let fetchRequest = Sentence.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", uuid.uuidString)
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
         guard let sentence = try? persistentContainer.viewContext.fetch(fetchRequest).first else {
             return
         }

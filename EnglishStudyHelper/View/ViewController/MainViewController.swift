@@ -76,11 +76,11 @@ class MainViewController: UIViewController {
     }
     
     @objc private func presentEditingVC() {
-        navigationController?.pushViewController(SentenceEditingViewController(), animated: true)
+        navigationController?.pushViewController(EditingViewController(), animated: true)
     }
     
     @objc private func presentSentenceAddingVC() {
-        present(SentenceAddingViewController(), animated: true)
+        present(AddingViewController(), animated: true)
     }
 }
 

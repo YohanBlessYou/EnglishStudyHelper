@@ -1,7 +1,6 @@
 import UIKit
 
 class StudyingViewController: UIViewController {
-    private var sentenceViewModel = SentenceViewModel()
     private let koreanView: SimpleSquareView = {
         let view = SimpleSquareView(title: "한국어 문장", isEditable: false)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -64,11 +63,11 @@ class StudyingViewController: UIViewController {
     }
     
     private func registerAction() {
-        sentenceViewModel.currentSentenceActions.append({ [weak self] sentence in
+        SentenceViewModel.shared.currentSentenceActions.append({ [weak self] sentence in
             self?.koreanView.textView.text = sentence.korean
             self?.englishView.textView.text = sentence.english
         })
-        sentenceViewModel.solutionIsHiddenActions.append({ [weak self] isHidden in
+        SentenceViewModel.shared.solutionIsHiddenActions.append({ [weak self] isHidden in
             if isHidden {
                 self?.englishView.textView.textColor = self?.englishView.textView.backgroundColor
             } else {
@@ -88,17 +87,17 @@ class StudyingViewController: UIViewController {
     }
     
     @objc private func toggleSolutionHiding() {
-        sentenceViewModel.solutionIsHidden.toggle()
+        SentenceViewModel.shared.solutionIsHidden.toggle()
     }
     
     @objc private func updateNextSentence() {
-        sentenceViewModel.toNext()
+        SentenceViewModel.shared.toNext()
     }
     
     @objc private func presentOption() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let updateAction = UIAlertAction(title: "수정", style: .default) { _ in
-            let updateVC = SentenceEditingViewController()
+            let updateVC = EditingViewController()
             let navigationVC = UINavigationController(rootViewController: updateVC)
             self.present(navigationVC, animated: true)
         }
@@ -113,6 +112,6 @@ class StudyingViewController: UIViewController {
     }
     
     private func initState() {
-        sentenceViewModel.toNext()
+        SentenceViewModel.shared.toNext()
     }
 }

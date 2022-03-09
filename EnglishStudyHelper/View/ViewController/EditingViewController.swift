@@ -1,8 +1,7 @@
 import UIKit
 
-class SentenceEditingViewController: UIViewController {
+class EditingViewController: UIViewController {
     private let tableView = UITableView()
-    private let viewModel = SentenceViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,13 +21,13 @@ class SentenceEditingViewController: UIViewController {
     }
     
     private func registerAction() {
-        viewModel.sentencesActions.append({ [weak self] in
+        SentenceViewModel.shared.sentencesActions.append({ [weak self] in
             self?.tableView.reloadData()
         })
     }
 }
 
-extension SentenceEditingViewController: UITableViewDataSource, UITableViewDelegate {
+extension EditingViewController: UITableViewDataSource, UITableViewDelegate {
     private func initTableView() {
         tableView.dataSource = self
         tableView.delegate = self
@@ -36,19 +35,34 @@ extension SentenceEditingViewController: UITableViewDataSource, UITableViewDeleg
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.sentences.count
+        return SentenceViewModel.shared.sentences.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
         var configuration = cell.defaultContentConfiguration()
-        configuration.text = viewModel.sentences[indexPath.row].korean
+        configuration.text = SentenceViewModel.shared.sentences[indexPath.row].korean
         cell.contentConfiguration = configuration
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let sentence = viewModel.sentences[indexPath.row]
-        viewModel.deleteSentence(id: sentence.id!)
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let editingAction = UIAlertAction(title: "수정", style: .default) { [weak self] _ in
+            let updatingVC = UpdatingViewController()
+            updatingVC.sentenceId = SentenceViewModel.shared.sentences[indexPath.row].id
+            self?.present(updatingVC, animated: true)
+        }
+        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { _ in
+            guard let sentenceId = SentenceViewModel.shared.sentences[indexPath.row].id else {
+                return
+            }
+            SentenceViewModel.shared.onDelete(id: sentenceId)
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        actionSheet.addAction(editingAction)
+        actionSheet.addAction(deleteAction)
+        actionSheet.addAction(cancelAction)
+        present(actionSheet, animated: true)
     }
 }
