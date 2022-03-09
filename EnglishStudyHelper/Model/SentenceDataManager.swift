@@ -18,12 +18,14 @@ class SentenceDataManager {
         sentence.id = UUID().uuidString
         sentence.korean = korean
         sentence.english = english
-        sentence.createdAt = Date()
+        sentence.createdAt = Date().timeIntervalSince1970
         try? persistentContainer.viewContext.save()
     }
     
     func read() -> [Sentence] {
-        let sentences = try? persistentContainer.viewContext.fetch(Sentence.fetchRequest())
+        let request = Sentence.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
+        let sentences = try? persistentContainer.viewContext.fetch(request)
         return sentences ?? []
     }
     
