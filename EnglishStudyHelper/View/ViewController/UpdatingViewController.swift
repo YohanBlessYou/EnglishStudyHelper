@@ -65,7 +65,7 @@ class UpdatingViewController: UIViewController {
             UIAlertController.Basic.warning(target: self, message: "영어 입력이 잘못되었습니다")
             return
         }
-        SentenceViewModel.shared.onUpdate(id: sentenceId!, korean: koreanView.textView.text, english: englishView.textView.text)
+        SentenceViewModel.shared.update(id: sentenceId!, korean: koreanView.textView.text, english: englishView.textView.text)
         dismiss(animated: true)
     }
     

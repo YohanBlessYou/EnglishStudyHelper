@@ -7,7 +7,7 @@ class EditingViewController: UIViewController {
         super.viewDidLoad()
         initAppearance()
         initTableView()
-        registerAction()
+        initAction()
     }
     
     private func initAppearance() {
@@ -20,8 +20,14 @@ class EditingViewController: UIViewController {
         tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
     }
     
-    private func registerAction() {
-        SentenceViewModel.shared.sentencesActions.append({ [weak self] in
+    private func initAction() {
+        SentenceViewModel.shared.onCreate.append ({ [weak self] in
+            self?.tableView.reloadData()
+        })
+        SentenceViewModel.shared.onUpdate.append ({ [weak self] _,_,_ in
+            self?.tableView.reloadData()
+        })
+        SentenceViewModel.shared.onDelete.append ({ [weak self] in
             self?.tableView.reloadData()
         })
     }
@@ -57,7 +63,7 @@ extension EditingViewController: UITableViewDataSource, UITableViewDelegate {
             guard let sentenceId = SentenceViewModel.shared.sentences[indexPath.row].id else {
                 return
             }
-            SentenceViewModel.shared.onDelete(id: sentenceId)
+            SentenceViewModel.shared.delete(id: sentenceId)
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         actionSheet.addAction(editingAction)

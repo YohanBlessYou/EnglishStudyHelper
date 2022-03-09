@@ -3,37 +3,14 @@ import Foundation
 class SentenceViewModel {
     static let shared = SentenceViewModel()
     
-    var currentSentenceActions: [(Sentence) -> ()] = []
-    var solutionIsHiddenActions: [(Bool) -> ()] = []
-    var sentencesActions: [() -> ()] = []
-    
-    var solutionIsHidden: Bool = true {
-        didSet {
-            solutionIsHiddenActions.forEach {
-                $0(solutionIsHidden)
-            }
-        }
-    }
-    lazy var sentences = sentenceDataManager.read() {
-        didSet {
-            sentencesActions.forEach {
-                $0()
-            }
-        }
-    }
+    var onNext: [(Sentence?) -> ()] = []
+    var onCreate: [() -> ()] = []
+    var onUpdate: [(String, String, String) -> ()] = []
+    var onDelete: [() -> ()] = []
+    lazy var sentences = sentenceDataManager.read()
+    weak var currentSentence: Sentence?
     
     private let sentenceDataManager = SentenceDataManager()
-    
-    private var currentSentence: Sentence? {
-        didSet {
-            guard let sentence = currentSentence else {
-                return
-            }
-            currentSentenceActions.forEach {
-                $0(sentence)
-            }
-        }
-    }
     
     private init() { }
     
@@ -44,22 +21,25 @@ class SentenceViewModel {
     }
     
     func toNext() {
-        currentSentence = sentences.randomElement()
-        solutionIsHidden = true
+        let newSentence = sentences.randomElement()
+        currentSentence = newSentence
+        onNext.forEach { $0(newSentence) }
     }
     
-    func onCreate(korean: String, english: String) {
+    func create(korean: String, english: String) {
         sentenceDataManager.create(korean: korean, english: english)
         sentences = sentenceDataManager.read()
+        onCreate.forEach { $0() }
     }
     
-    func onUpdate(id: String, korean: String, english: String) {
+    func update(id: String, korean: String, english: String) {
         sentenceDataManager.update(id: id, korean: korean, english: english)
-        sentences = sentenceDataManager.read()
+        onUpdate.forEach { $0(id, korean, english) }
     }
     
-    func onDelete(id: String) {
+    func delete(id: String) {
         sentenceDataManager.delete(id: id)
         sentences = sentenceDataManager.read()
+        onDelete.forEach { $0() }
     }
 }

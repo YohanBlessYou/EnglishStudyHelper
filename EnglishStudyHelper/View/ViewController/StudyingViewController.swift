@@ -32,7 +32,7 @@ class StudyingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initAppearance()
-        registerAction()
+        initAction()
         initState()
     }
 
@@ -62,20 +62,27 @@ class StudyingViewController: UIViewController {
         ])
     }
     
-    private func registerAction() {
-        SentenceViewModel.shared.currentSentenceActions.append({ [weak self] sentence in
-            self?.koreanView.textView.text = sentence.korean
-            self?.englishView.textView.text = sentence.english
-        })
-        SentenceViewModel.shared.solutionIsHiddenActions.append({ [weak self] isHidden in
-            if isHidden {
-                self?.englishView.textView.textColor = self?.englishView.textView.backgroundColor
-            } else {
-                self?.englishView.textView.textColor = .label
-            }
-        })
+    private func initAction() {
+        SentenceViewModel.shared.onNext.append { [weak self] newSentence in
+            guard let newSentence = newSentence else { return }
+            self?.koreanView.textView.text = newSentence.korean
+            self?.englishView.textView.text = newSentence.english
+            self?.englishView.textView.textColor = self?.englishView.textView.backgroundColor
+        }
 
-        showSolutionButton.addTarget(self, action: #selector(toggleSolutionHiding), for: .touchUpInside)
+        SentenceViewModel.shared.onUpdate.append { [weak self] id, korean, english in
+            guard id == SentenceViewModel.shared.currentSentence?.id else {
+                return
+            }
+            self?.koreanView.textView.text = korean
+            self?.englishView.textView.text = english
+        }
+        
+        SentenceViewModel.shared.onDelete.append {
+            SentenceViewModel.shared.toNext()
+        }
+
+        showSolutionButton.addTarget(self, action: #selector(toggleEnglishHiding), for: .touchUpInside)
         nextButton.addTarget(self, action: #selector(updateNextSentence), for: .touchUpInside)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -86,8 +93,12 @@ class StudyingViewController: UIViewController {
         )
     }
     
-    @objc private func toggleSolutionHiding() {
-        SentenceViewModel.shared.solutionIsHidden.toggle()
+    @objc private func toggleEnglishHiding() {
+        if englishView.textView.textColor == .label {
+            englishView.textView.textColor = englishView.textView.backgroundColor
+        } else {
+            englishView.textView.textColor = .label
+        }
     }
     
     @objc private func updateNextSentence() {
@@ -96,13 +107,16 @@ class StudyingViewController: UIViewController {
     
     @objc private func presentOption() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let updateAction = UIAlertAction(title: "수정", style: .default) { _ in
-            let updateVC = EditingViewController()
-            let navigationVC = UINavigationController(rootViewController: updateVC)
-            self.present(navigationVC, animated: true)
+        let updateAction = UIAlertAction(title: "수정", style: .default) { [weak self] _ in
+            let updatingVC = UpdatingViewController()
+            updatingVC.sentenceId = SentenceViewModel.shared.currentSentence?.id
+            self?.present(updatingVC, animated: true)
         }
         let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { _ in
-            
+            guard let sentenceId = SentenceViewModel.shared.currentSentence?.id else {
+                return
+            }
+            SentenceViewModel.shared.delete(id: sentenceId)
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         alert.addAction(updateAction)
