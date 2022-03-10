@@ -41,7 +41,7 @@ class SimpleSquareView: UIView {
         super.init(coder: coder)
     }
     
-    convenience init(title: String, isEditable: Bool) {
+    convenience init(title: String, isEditable: Bool = true) {
         self.init(frame: CGRect())
         label.text = title
         textView.isEditable = isEditable
