@@ -6,12 +6,26 @@ enum NetworkRequester {
         case POST
     }
     
+    enum HTTPError: Error {
+        case URLSessionError(Error)
+        case badStatusCode(Int)
+        
+        var description: String {
+            switch self {
+            case .URLSessionError(let error):
+                return error.localizedDescription
+            case .badStatusCode(let statusCode):
+                return "badStatusCode : \(statusCode)"
+            }
+        }
+    }
+    
     static func request(
         url: URL,
         httpMethod: HTTPMethod,
         httpHeaders: [String: String],
         httpBody: Data,
-        completion: @escaping (Data) -> ()
+        completion: @escaping (Result<Data, HTTPError>) -> ()
     ) {
         var request = URLRequest(url: url)
         request.httpMethod = httpMethod.rawValue
@@ -22,18 +36,22 @@ enum NetworkRequester {
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
-                print(error)
+                completion(.failure(.URLSessionError(error)))
                 return
             }
-
+            
             guard let data = data,
-                let response = response as? HTTPURLResponse else {
+                  let response = response as? HTTPURLResponse else {
+                      return
+                  }
+            
+            
+            guard response.statusCode == 200 else {
+                completion(.failure(.badStatusCode(response.statusCode)))
                 return
             }
 
-            print(response.statusCode)
-            print(String(data: data, encoding: .utf8))
-            completion(data)
+            completion(.success(data))
         }.resume()
     }
 }

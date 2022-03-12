@@ -85,8 +85,20 @@ class AddingViewController: UIViewController {
     }
     
     @objc private func requestTranslation() {
-        PapagoManager().translate(korean: koreanView.textView.text) { data in
-            
+        PapagoManager.shared.translate(korean: koreanView.textView.text) { result in
+            switch result {
+            case .success(let data):
+                guard let response = try? JSONDecoder().decode(PapagoManager.Response.self, from: data) else {
+                    UIAlertController.Basic.warning(target: self, message: "JSON Parsing Error")
+                    return
+                }
+                DispatchQueue.main.async {
+                    self.englishView.textView.text = response.message.result?.translatedText
+                }
+            case .failure(let error):
+                UIAlertController.Basic.warning(target: self, message: error.description)
+                break
+            }
         }
     }
 }
