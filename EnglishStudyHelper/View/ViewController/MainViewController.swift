@@ -1,4 +1,5 @@
 import UIKit
+import GoogleSignIn
 
 class MainViewController: UIViewController {
     private let startButton: UIButton = {
@@ -31,6 +32,13 @@ class MainViewController: UIViewController {
         return button
     }()
     
+    private let googleLoginButton: ButtonStyleView = {
+        let icon = UIImage(named: "GoogleIcon")!
+        let view = ButtonStyleView(image: icon, title: "Google Login", action: nil)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initialize()
@@ -39,29 +47,29 @@ class MainViewController: UIViewController {
     private func initialize() {
         initAppearance()
         initAction()
+        initState()
     }
     
     private func initAppearance() {
         view.backgroundColor = .systemBackground
         
-        view.addSubview(startButton)
-        view.addSubview(editingButton)
-        view.addSubview(addButton)
+        let stackView = UIStackView(arrangedSubviews: [
+            startButton,
+            editingButton,
+            addButton,
+            googleLoginButton
+        ])
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.spacing = 20.0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(stackView)
         NSLayoutConstraint.activate([
-            startButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 150),
-            startButton.heightAnchor.constraint(equalToConstant: 100),
-            startButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            startButton.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.5),
-            
-            editingButton.topAnchor.constraint(equalTo: startButton.bottomAnchor, constant: 100),
-            editingButton.heightAnchor.constraint(equalToConstant: 100),
-            editingButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            editingButton.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.5),
-            
-            addButton.topAnchor.constraint(equalTo: editingButton.bottomAnchor, constant: 100),
-            addButton.heightAnchor.constraint(equalToConstant: 100),
-            addButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            addButton.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.5),
+            stackView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor,
+                                             multiplier: 0.7),
+            stackView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            stackView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 0.5),
+            stackView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
         ])
     }
     
@@ -69,6 +77,16 @@ class MainViewController: UIViewController {
         startButton.addTarget(self, action: #selector(presentStudyingVC), for: .touchUpInside)
         editingButton.addTarget(self, action: #selector(presentEditingVC), for: .touchUpInside)
         addButton.addTarget(self, action: #selector(presentSentenceAddingVC), for: .touchUpInside)
+        googleLoginButton.onTouch = { [weak self] in
+            GoogleDriveManager.shared.toggleAuthentication(target: self
+            , onLoggedIn: {
+                self?.googleLoginButton.titleLabel.text = "Google Logout"
+            }, onLoggedOut: {
+                self?.googleLoginButton.titleLabel.text = "Google Login"
+            }, onError: {
+                self?.presentBasicAlert(message: "로그인실패")
+            })
+        }
     }
     
     @objc private func presentStudyingVC() {
@@ -82,5 +100,12 @@ class MainViewController: UIViewController {
     @objc private func presentSentenceAddingVC() {
         present(AddingViewController(), animated: true)
     }
+    
+    private func initState() {
+        if GoogleDriveManager.shared.isLoggedIn {
+            googleLoginButton.titleLabel.text = "Google Logout"
+        } else {
+            googleLoginButton.titleLabel.text = "Google Login"
+        }
+    }
 }
-

@@ -72,31 +72,23 @@ class AddingViewController: UIViewController {
     }
     
     @objc private func addSentence() {
-        guard koreanView.textView.isOnlyKorean else {
-            UIAlertController.Basic.warning(target: self, message: "한국어 입력이 잘못되었습니다")
-            return
-        }
-        guard englishView.textView.isOnlyEnglish else {
-            UIAlertController.Basic.warning(target: self, message: "영어 입력이 잘못되었습니다")
-            return
-        }
         SentenceViewModel.shared.create(korean: koreanView.textView.text, english: englishView.textView.text)
         dismiss(animated: true)
     }
     
     @objc private func requestTranslation() {
-        PapagoManager.shared.translate(korean: koreanView.textView.text) { result in
+        PapagoManager.shared.translate(korean: koreanView.textView.text) { [weak self] result in
             switch result {
             case .success(let data):
                 guard let response = try? JSONDecoder().decode(PapagoManager.Response.self, from: data) else {
-                    UIAlertController.Basic.warning(target: self, message: "JSON Parsing Error")
+                    self?.presentBasicAlert(message: "JSON Parsing Error")
                     return
                 }
                 DispatchQueue.main.async {
-                    self.englishView.textView.text = response.message.result?.translatedText
+                    self?.englishView.textView.text = response.message.result?.translatedText
                 }
             case .failure(let error):
-                UIAlertController.Basic.warning(target: self, message: error.description)
+                self?.presentBasicAlert(message: error.description)
                 break
             }
         }

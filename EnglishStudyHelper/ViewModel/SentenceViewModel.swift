@@ -14,7 +14,7 @@ class SentenceViewModel {
     
     private init() { }
     
-    func sentence(fromId id: String) -> Sentence? {
+    func getSentence(fromId id: String) -> Sentence? {
         sentences.filter {
             $0.id == id
         }.first
