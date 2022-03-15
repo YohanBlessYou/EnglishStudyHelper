@@ -8,6 +8,7 @@ class EditingViewController: UIViewController {
         initAppearance()
         initTableView()
         initAction()
+//        GoogleDriveManager.shared.download(onComplete: {}, onError: {})
     }
     
     private func initAppearance() {

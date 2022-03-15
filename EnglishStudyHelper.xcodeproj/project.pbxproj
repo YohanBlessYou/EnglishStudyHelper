@@ -24,10 +24,11 @@
 		604A94A327D074BB007CCCD5 /* SimpleSquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604A94A227D074BB007CCCD5 /* SimpleSquareView.swift */; };
 		604A94A527D09630007CCCD5 /* UIAlertController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604A94A427D09630007CCCD5 /* UIAlertController+Extension.swift */; };
 		604A94A727D0A730007CCCD5 /* EditingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604A94A627D0A730007CCCD5 /* EditingViewController.swift */; };
-		60560F9727DDBAF90021DF93 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 60560F9627DDBAF90021DF93 /* GoogleSignIn */; };
 		60560F9B27DDC5E50021DF93 /* ButtonStyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60560F9A27DDC5E50021DF93 /* ButtonStyleView.swift */; };
 		60C3176327DDA92000E152DC /* GoogleDriveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C3176227DDA92000E152DC /* GoogleDriveManager.swift */; };
 		60C3176B27DDABB800E152DC /* JSONTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C3176A27DDABB800E152DC /* JSONTests.swift */; };
+		779BA4A09F64C815E95F9278 /* Pods_EnglishStudyHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE0455C645FE0FF841F85744 /* Pods_EnglishStudyHelper.framework */; };
+		C86C0E9AE699BC35675B0B4D /* Pods_EnglishStudyHelperTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A1A70082723084396685F1B /* Pods_EnglishStudyHelperTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1AE9C6D71270650B42699FCE /* Pods-EnglishStudyHelperTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EnglishStudyHelperTests.debug.xcconfig"; path = "Target Support Files/Pods-EnglishStudyHelperTests/Pods-EnglishStudyHelperTests.debug.xcconfig"; sourceTree = "<group>"; };
+		1F6058043C2D91E89800B329 /* Pods-EnglishStudyHelper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EnglishStudyHelper.release.xcconfig"; path = "Target Support Files/Pods-EnglishStudyHelper/Pods-EnglishStudyHelper.release.xcconfig"; sourceTree = "<group>"; };
 		600B8EBA27CFDC68002ADF4E /* EnglishStudyHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EnglishStudyHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		600B8EBD27CFDC68002ADF4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		600B8EBF27CFDC68002ADF4E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -64,6 +67,11 @@
 		60C3176227DDA92000E152DC /* GoogleDriveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleDriveManager.swift; sourceTree = "<group>"; };
 		60C3176827DDABB800E152DC /* EnglishStudyHelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EnglishStudyHelperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		60C3176A27DDABB800E152DC /* JSONTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONTests.swift; sourceTree = "<group>"; };
+		60EB5A6127E0C22C003FAECC /* EnglishStudyHelper-Bridge-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EnglishStudyHelper-Bridge-Header.h"; sourceTree = "<group>"; };
+		7A1A70082723084396685F1B /* Pods_EnglishStudyHelperTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EnglishStudyHelperTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		86F982AB3A204013F4E38C01 /* Pods-EnglishStudyHelperTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EnglishStudyHelperTests.release.xcconfig"; path = "Target Support Files/Pods-EnglishStudyHelperTests/Pods-EnglishStudyHelperTests.release.xcconfig"; sourceTree = "<group>"; };
+		A9D06907E64EC89EE7F0A8DD /* Pods-EnglishStudyHelper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EnglishStudyHelper.debug.xcconfig"; path = "Target Support Files/Pods-EnglishStudyHelper/Pods-EnglishStudyHelper.debug.xcconfig"; sourceTree = "<group>"; };
+		BE0455C645FE0FF841F85744 /* Pods_EnglishStudyHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EnglishStudyHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60560F9727DDBAF90021DF93 /* GoogleSignIn in Frameworks */,
+				779BA4A09F64C815E95F9278 /* Pods_EnglishStudyHelper.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,18 +87,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C86C0E9AE699BC35675B0B4D /* Pods_EnglishStudyHelperTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		106826F6D613C7F195EFFA9A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BE0455C645FE0FF841F85744 /* Pods_EnglishStudyHelper.framework */,
+				7A1A70082723084396685F1B /* Pods_EnglishStudyHelperTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		600B8EB127CFDC68002ADF4E = {
 			isa = PBXGroup;
 			children = (
 				600B8EBC27CFDC68002ADF4E /* EnglishStudyHelper */,
 				60C3176927DDABB800E152DC /* EnglishStudyHelperTests */,
 				600B8EBB27CFDC68002ADF4E /* Products */,
+				E7C65C9857069B944CFE6571 /* Pods */,
+				106826F6D613C7F195EFFA9A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -157,6 +177,7 @@
 				6033FAF027DA4737005A7537 /* NetworkRequester.swift */,
 				6033FAF227DA47A5005A7537 /* PapagoManager.swift */,
 				60C3176227DDA92000E152DC /* GoogleDriveManager.swift */,
+				60EB5A6127E0C22C003FAECC /* EnglishStudyHelper-Bridge-Header.h */,
 				604A948D27D06927007CCCD5 /* Sentence.xcdatamodeld */,
 			);
 			path = Model;
@@ -178,6 +199,17 @@
 			path = EnglishStudyHelperTests;
 			sourceTree = "<group>";
 		};
+		E7C65C9857069B944CFE6571 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A9D06907E64EC89EE7F0A8DD /* Pods-EnglishStudyHelper.debug.xcconfig */,
+				1F6058043C2D91E89800B329 /* Pods-EnglishStudyHelper.release.xcconfig */,
+				1AE9C6D71270650B42699FCE /* Pods-EnglishStudyHelperTests.debug.xcconfig */,
+				86F982AB3A204013F4E38C01 /* Pods-EnglishStudyHelperTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -185,18 +217,17 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 600B8ECE27CFDC69002ADF4E /* Build configuration list for PBXNativeTarget "EnglishStudyHelper" */;
 			buildPhases = (
+				376CA67CD5AAFE0B5041CD6E /* [CP] Check Pods Manifest.lock */,
 				600B8EB627CFDC68002ADF4E /* Sources */,
 				600B8EB727CFDC68002ADF4E /* Frameworks */,
 				600B8EB827CFDC68002ADF4E /* Resources */,
+				C565DBEDC6321B1A056D1B99 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = EnglishStudyHelper;
-			packageProductDependencies = (
-				60560F9627DDBAF90021DF93 /* GoogleSignIn */,
-			);
 			productName = EnglishStudyHelper;
 			productReference = 600B8EBA27CFDC68002ADF4E /* EnglishStudyHelper.app */;
 			productType = "com.apple.product-type.application";
@@ -205,6 +236,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 60C3176E27DDABB800E152DC /* Build configuration list for PBXNativeTarget "EnglishStudyHelperTests" */;
 			buildPhases = (
+				6B506EC541F7BEE1E65610AD /* [CP] Check Pods Manifest.lock */,
 				60C3176427DDABB800E152DC /* Sources */,
 				60C3176527DDABB800E152DC /* Frameworks */,
 				60C3176627DDABB800E152DC /* Resources */,
@@ -247,9 +279,6 @@
 				Base,
 			);
 			mainGroup = 600B8EB127CFDC68002ADF4E;
-			packageReferences = (
-				60560F9527DDBAF90021DF93 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
-			);
 			productRefGroup = 600B8EBB27CFDC68002ADF4E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -278,6 +307,70 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		376CA67CD5AAFE0B5041CD6E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-EnglishStudyHelper-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6B506EC541F7BEE1E65610AD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-EnglishStudyHelperTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C565DBEDC6321B1A056D1B99 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-EnglishStudyHelper/Pods-EnglishStudyHelper-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-EnglishStudyHelper/Pods-EnglishStudyHelper-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-EnglishStudyHelper/Pods-EnglishStudyHelper-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		600B8EB627CFDC68002ADF4E /* Sources */ = {
@@ -452,6 +545,7 @@
 		};
 		600B8ECF27CFDC69002ADF4E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A9D06907E64EC89EE7F0A8DD /* Pods-EnglishStudyHelper.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -474,6 +568,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = JNoma.EnglishStudyHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "EnglishStudyHelper/Model/EnglishStudyHelper-Bridge-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -481,6 +576,7 @@
 		};
 		600B8ED027CFDC69002ADF4E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1F6058043C2D91E89800B329 /* Pods-EnglishStudyHelper.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -503,6 +599,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = JNoma.EnglishStudyHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "EnglishStudyHelper/Model/EnglishStudyHelper-Bridge-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -510,6 +607,7 @@
 		};
 		60C3176F27DDABB800E152DC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AE9C6D71270650B42699FCE /* Pods-EnglishStudyHelperTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -528,6 +626,7 @@
 		};
 		60C3177027DDABB800E152DC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 86F982AB3A204013F4E38C01 /* Pods-EnglishStudyHelperTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -575,25 +674,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		60560F9527DDBAF90021DF93 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 6.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		60560F9627DDBAF90021DF93 /* GoogleSignIn */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 60560F9527DDBAF90021DF93 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
-			productName = GoogleSignIn;
-		};
-/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		604A948D27D06927007CCCD5 /* Sentence.xcdatamodeld */ = {

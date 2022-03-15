@@ -34,6 +34,7 @@ class StudyingViewController: UIViewController {
         initAppearance()
         initAction()
         initState()
+        GoogleDriveManager.shared.upload(onComplete: {}, onError: {})
     }
 
     private func initAppearance() {

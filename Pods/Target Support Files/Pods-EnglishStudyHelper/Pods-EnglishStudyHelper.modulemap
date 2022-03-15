@@ -1,0 +1,6 @@
+framework module Pods_EnglishStudyHelper {
+  umbrella header "Pods-EnglishStudyHelper-umbrella.h"
+
+  export *
+  module * { export * }
+}
