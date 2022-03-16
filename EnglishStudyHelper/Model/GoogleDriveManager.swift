@@ -85,18 +85,47 @@ extension GoogleDriveManager {
     }
     
     func download(onComplete: (() -> ())?, onError: (() -> ())?) {
-        guard let fileID = targetFile.identifier else {
+        let query = GTLRDriveQuery_FilesList.query()
+        query.pageSize = 1
+        query.q = "name contains '\(String(describing: targetFile.name!))'"
+        
+        service.executeQuery(query) { (ticket, results, error) in
+            if let error = error {
+                onError?()
+                return
+            }
+            
+            guard let file = (results as? GTLRDrive_FileList)?.files?.first else {
+                onError?()
+                return
+            }
+            self.fetch(file: file, onComplete: onComplete, onError: onError)
+        }
+    }
+    
+    private func fetch(file: GTLRDrive_File, onComplete: (() -> ())?, onError: (() -> ())?) {
+        guard let fileID = file.identifier else {
             onError?()
             return
         }
         
-        self.service.executeQuery(GTLRDriveQuery_FilesGet.queryForMedia(withFileId: fileID)) { (ticket, file, error) in
+        service.executeQuery(GTLRDriveQuery_FilesGet.queryForMedia(withFileId: fileID)) { (ticket, file, error) in
             guard let data = (file as? GTLRDataObject)?.data else {
                 onError?()
                 return
             }
-            let sentence = try! JSONDecoder().decode(SentenceForJSON.self, from: data)
+            let sentences = try! JSONDecoder().decode([SentenceForJSON].self, from: data)
+            self.updateCoreData(newSentences: sentences)
             onComplete?()
+        }
+    }
+    
+    private func updateCoreData(newSentences: [SentenceForJSON]) {
+        let coreDataSentences = SentenceViewModel.shared.sentences
+        coreDataSentences.forEach { SentenceViewModel.shared.delete(id: $0.id!) }
+        
+        newSentences.forEach {
+            SentenceViewModel.shared.create(korean: $0.korean, english: $0.english)
         }
     }
 }
