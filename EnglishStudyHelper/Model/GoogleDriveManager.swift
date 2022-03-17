@@ -3,32 +3,16 @@ import GoogleSignIn
 import GoogleAPIClientForREST
 
 class GoogleDriveManager {
-    static let shared = GoogleDriveManager()
-    
-    var isLoggedIn: Bool {
-        return GIDSignIn.sharedInstance.currentUser != nil
-    }
     private let service = GTLRDriveService()
     private let targetFile: GTLRDrive_File = {
         let file = GTLRDrive_File()
         file.name = "EnglishStudyHelper.json"
         return file
     }()
-
-    private init() { }
 }
 
 //MARK: - Authentication
 extension GoogleDriveManager {
-    func toggleAuthentication(target: UIViewController?, onLoggedIn: (() -> ())?, onLoggedOut: (() -> ())?, onError: (() -> ())?) {
-        if isLoggedIn {
-            logout(onComplete: onLoggedOut)
-        } else {
-            guard let target = target else { return }
-            login(target: target, onComplete: onLoggedIn, onError: onError)
-        }
-    }
-
     func login(target: UIViewController, onComplete: (() -> ())?, onError: (() -> ())?) {
         let signInConfig = GIDConfiguration(clientID: UserInfo.GoogleDrive.clientId)
         GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: target) { user, error in
@@ -41,16 +25,16 @@ extension GoogleDriveManager {
         }
     }
     
-    func logout(onComplete: (() -> ())?) {
-        GIDSignIn.sharedInstance.signOut()
-        onComplete?()
-    }
-    
-    private func addDriveScope(target: UIViewController, onComplete: (() -> ())?, onError: (() -> ())?) {
+    private func addDriveScope(target: UIViewController, onComplete: (() -> ())?,onError: (() -> ())?) {
         let driveScope = "https://www.googleapis.com/auth/drive"
         GIDSignIn.sharedInstance.addScopes([driveScope], presenting: target) { user, error in
             onComplete?()
         }
+    }
+    
+    func logout(onLoggedOut: (() -> ())?) {
+        GIDSignIn.sharedInstance.signOut()
+        onLoggedOut?()
     }
 }
 

@@ -3,26 +3,45 @@ import Foundation
 class SentenceViewModel {
     static let shared = SentenceViewModel()
     
-    var onNext: [(Sentence?) -> ()] = []
-    var onCreate: [() -> ()] = []
-    var onUpdate: [(String, String, String) -> ()] = []
-    var onDelete: [() -> ()] = []
+    weak var selectedSentence: Sentence?
     lazy var sentences = sentenceDataManager.read()
-    weak var currentSentence: Sentence?
-    
     private let sentenceDataManager = SentenceDataManager()
+    private(set) var onNext: [(Sentence) -> ()] = []
+    private(set) var onCreate: [() -> ()] = []
+    private(set) var onUpdate: [(String, String, String) -> ()] = []
+    private(set) var onDelete: [() -> ()] = []
     
     private init() { }
     
-    func getSentence(fromId id: String) -> Sentence? {
+    func registerHandler(
+        onNext: ((Sentence) -> ())? = nil,
+        onCreate: (() -> ())? = nil,
+        onUpdate: ((String, String, String) -> ())? = nil,
+        onDelete: (() -> ())? = nil
+    ) {
+        if let onNext = onNext {
+            self.onNext.append(onNext)
+        }
+        if let onCreate = onCreate {
+            self.onCreate.append(onCreate)
+        }
+        if let onUpdate = onUpdate {
+            self.onUpdate.append(onUpdate)
+        }
+        if let onDelete = onDelete {
+            self.onDelete.append(onDelete)
+        }
+    }
+    
+    func find(id: String) -> Sentence? {
         sentences.filter {
             $0.id == id
         }.first
     }
     
     func toNext() {
-        let newSentence = sentences.randomElement()
-        currentSentence = newSentence
+        guard let newSentence = sentences.randomElement() else { return }
+        selectedSentence = newSentence
         onNext.forEach { $0(newSentence) }
     }
     
