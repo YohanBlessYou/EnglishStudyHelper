@@ -9,11 +9,11 @@ class ButtonStyleView: UIView {
     }()
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .title1)
+        label.font = .preferredFont(forTextStyle: .title2)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    var onTouch: (() -> ())?
+    private var onTouch: (() -> ())?
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -5,7 +5,7 @@ class MainViewController: UIViewController {
     private let startButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("시작", for: .normal)
-        button.titleLabel?.font = .preferredFont(forTextStyle: .title1)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .title2)
         button.setTitleColor(.systemBackground, for: .normal)
         button.backgroundColor = .systemBlue
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -15,7 +15,7 @@ class MainViewController: UIViewController {
     private let editingButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("편집", for: .normal)
-        button.titleLabel?.font = .preferredFont(forTextStyle: .title1)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .title2)
         button.setTitleColor(.systemBackground, for: .normal)
         button.backgroundColor = .systemYellow
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -25,16 +25,29 @@ class MainViewController: UIViewController {
     private let addButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("문장추가", for: .normal)
-        button.titleLabel?.font = .preferredFont(forTextStyle: .title1)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .title2)
         button.setTitleColor(.systemBackground, for: .normal)
         button.backgroundColor = .systemGreen
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    private let googleLoginButton: ButtonStyleView = {
+    private lazy var googleUploadingButton: ButtonStyleView = {
         let icon = UIImage(named: "GoogleIcon")!
-        let view = ButtonStyleView(image: icon, title: "Google Login", action: nil)
+        let view = ButtonStyleView(image: icon, title: "클라우드 업로드") { [weak self] in
+            guard let target = self else { return }
+            GoogleDriveViewModel.shared.upload(target: target)
+        }
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var googleDownloadingButton: ButtonStyleView = {
+        let icon = UIImage(named: "GoogleIcon")!
+        let view = ButtonStyleView(image: icon, title: "클라우드 다운로드") { [weak self] in
+            guard let target = self else { return }
+            GoogleDriveViewModel.shared.download(target: target)
+        }
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -47,7 +60,6 @@ class MainViewController: UIViewController {
     private func initialize() {
         initAppearance()
         initAction()
-        initState()
     }
     
     private func initAppearance() {
@@ -57,7 +69,8 @@ class MainViewController: UIViewController {
             startButton,
             editingButton,
             addButton,
-            googleLoginButton
+            googleUploadingButton,
+            googleDownloadingButton
         ])
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
@@ -65,8 +78,7 @@ class MainViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stackView)
         NSLayoutConstraint.activate([
-            stackView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor,
-                                             multiplier: 0.7),
+            stackView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.7),
             stackView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             stackView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 0.5),
             stackView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
@@ -77,16 +89,10 @@ class MainViewController: UIViewController {
         startButton.addTarget(self, action: #selector(presentStudyingVC), for: .touchUpInside)
         editingButton.addTarget(self, action: #selector(presentEditingVC), for: .touchUpInside)
         addButton.addTarget(self, action: #selector(presentSentenceAddingVC), for: .touchUpInside)
-        googleLoginButton.onTouch = { [weak self] in
-            GoogleDriveManager.shared.toggleAuthentication(target: self
-            , onLoggedIn: {
-                self?.googleLoginButton.titleLabel.text = "Google Logout"
-            }, onLoggedOut: {
-                self?.googleLoginButton.titleLabel.text = "Google Login"
-            }, onError: {
-                self?.presentBasicAlert(message: "로그인실패")
-            })
-        }
+        
+        GoogleDriveViewModel.shared.registerHandler(onError: { [weak self] in
+            self?.presentBasicAlert(message: "로그인 실패")
+        })
     }
     
     @objc private func presentStudyingVC() {
@@ -99,13 +105,5 @@ class MainViewController: UIViewController {
     
     @objc private func presentSentenceAddingVC() {
         present(AddingViewController(), animated: true)
-    }
-    
-    private func initState() {
-        if GoogleDriveManager.shared.isLoggedIn {
-            googleLoginButton.titleLabel.text = "Google Logout"
-        } else {
-            googleLoginButton.titleLabel.text = "Google Login"
-        }
     }
 }

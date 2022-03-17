@@ -23,8 +23,6 @@ class UpdatingViewController: UIViewController {
         return stackView
     }()
     
-    var sentenceId: String?
-
     override func viewDidLoad() {
         super.viewDidLoad()
         initAppearance()
@@ -57,16 +55,21 @@ class UpdatingViewController: UIViewController {
     }
     
     @objc private func updateSentence() {
-        SentenceViewModel.shared.update(id: sentenceId!, korean: koreanView.textView.text, english: englishView.textView.text)
+        guard let sentence = SentenceViewModel.shared.selectedSentence else {
+            presentBasicAlert(message: "에러 : selectedSentence == nil")
+            return
+        }
+        
+        SentenceViewModel.shared.update(
+            id: sentence.id!,
+            korean: koreanView.textView.text,
+            english: englishView.textView.text
+        )
         dismiss(animated: true)
     }
     
     private func initState() {
-        guard let sentenceId = sentenceId,
-            let sentence = SentenceViewModel.shared.getSentence(fromId: sentenceId) else {
-            return
-        }
-        
+        guard let sentence = SentenceViewModel.shared.selectedSentence else { return }
         koreanView.textView.text = sentence.korean
         englishView.textView.text = sentence.english
     }

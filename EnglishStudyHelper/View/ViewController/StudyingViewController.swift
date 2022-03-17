@@ -63,24 +63,17 @@ class StudyingViewController: UIViewController {
     }
     
     private func initAction() {
-        SentenceViewModel.shared.onNext.append { [weak self] newSentence in
-            guard let newSentence = newSentence else { return }
+        SentenceViewModel.shared.registerHandler(onNext: { [weak self] newSentence in
             self?.koreanView.textView.text = newSentence.korean
             self?.englishView.textView.text = newSentence.english
             self?.englishView.textView.textColor = self?.englishView.textView.backgroundColor
-        }
-
-        SentenceViewModel.shared.onUpdate.append { [weak self] id, korean, english in
-            guard id == SentenceViewModel.shared.currentSentence?.id else {
-                return
-            }
+        }, onUpdate: { [weak self] id, korean, english in
+            guard id == SentenceViewModel.shared.selectedSentence?.id else { return }
             self?.koreanView.textView.text = korean
             self?.englishView.textView.text = english
-        }
-        
-        SentenceViewModel.shared.onDelete.append {
+        }, onDelete: {
             SentenceViewModel.shared.toNext()
-        }
+        })
 
         showSolutionButton.addTarget(self, action: #selector(toggleEnglishHiding), for: .touchUpInside)
         nextButton.addTarget(self, action: #selector(updateNextSentence), for: .touchUpInside)
@@ -108,12 +101,10 @@ class StudyingViewController: UIViewController {
     @objc private func presentOption() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let updateAction = UIAlertAction(title: "수정", style: .default) { [weak self] _ in
-            let updatingVC = UpdatingViewController()
-            updatingVC.sentenceId = SentenceViewModel.shared.currentSentence?.id
-            self?.present(updatingVC, animated: true)
+            self?.present(UpdatingViewController(), animated: true)
         }
         let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { _ in
-            guard let sentenceId = SentenceViewModel.shared.currentSentence?.id else {
+            guard let sentenceId = SentenceViewModel.shared.selectedSentence?.id else {
                 return
             }
             SentenceViewModel.shared.delete(id: sentenceId)

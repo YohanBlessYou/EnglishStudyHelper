@@ -8,7 +8,6 @@ class EditingViewController: UIViewController {
         initAppearance()
         initTableView()
         initAction()
-//        GoogleDriveManager.shared.download(onComplete: {}, onError: {})
     }
     
     private func initAppearance() {
@@ -22,13 +21,11 @@ class EditingViewController: UIViewController {
     }
     
     private func initAction() {
-        SentenceViewModel.shared.onCreate.append ({ [weak self] in
+        SentenceViewModel.shared.registerHandler(onCreate: { [weak self] in
             self?.tableView.reloadData()
-        })
-        SentenceViewModel.shared.onUpdate.append ({ [weak self] _,_,_ in
+        }, onUpdate: { [weak self] _,_,_ in
             self?.tableView.reloadData()
-        })
-        SentenceViewModel.shared.onDelete.append ({ [weak self] in
+        }, onDelete: { [weak self] in
             self?.tableView.reloadData()
         })
     }
@@ -64,15 +61,13 @@ extension EditingViewController: UITableViewDataSource, UITableViewDelegate {
         
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let editingAction = UIAlertAction(title: "수정", style: .default) { [weak self] _ in
-            let updatingVC = UpdatingViewController()
-            updatingVC.sentenceId = SentenceViewModel.shared.sentences[indexPath.row].id
-            self?.present(updatingVC, animated: true)
+            let selectedSentence = SentenceViewModel.shared.sentences[indexPath.row]
+            SentenceViewModel.shared.selectedSentence = selectedSentence
+            self?.present(UpdatingViewController(), animated: true)
         }
         let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { _ in
-            guard let sentenceId = SentenceViewModel.shared.sentences[indexPath.row].id else {
-                return
-            }
-            SentenceViewModel.shared.delete(id: sentenceId)
+            let selectedSentence = SentenceViewModel.shared.sentences[indexPath.row]
+            SentenceViewModel.shared.delete(id: selectedSentence.id!)
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         actionSheet.addAction(editingAction)
