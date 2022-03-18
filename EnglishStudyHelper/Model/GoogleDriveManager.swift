@@ -4,11 +4,7 @@ import GoogleAPIClientForREST
 
 class GoogleDriveManager {
     private let service = GTLRDriveService()
-    private let targetFile: GTLRDrive_File = {
-        let file = GTLRDrive_File()
-        file.name = "EnglishStudyHelper.json"
-        return file
-    }()
+    private let fileName = "EnglishStudyHelper.json"
 }
 
 //MARK: - Authentication
@@ -52,11 +48,27 @@ extension GoogleDriveManager {
             SentenceForJSON(createdAt: $0.createdAt, korean: $0.korean!, english: $0.english!, id: $0.id!)
         }
         let json = try! JSONEncoder().encode(currentSentences)
-
-        let params = GTLRUploadParameters(data: json, mimeType: "application/json")
+        
+        executeFindQuery(onComplete: { file in
+            self.executeUpdateQuery(data: json, fileId: file.identifier!, onComplete: onComplete, onError: onError)
+        }, onError: {
+            self.executeUploadQuery(data: json, onComplete: onComplete, onError: onError)
+        })
+    }
+    
+    func download(onComplete: (() -> ())?, onError: (() -> ())?) {
+        executeFindQuery(onComplete: { file in
+            self.executeDownloadQuery(file: file, onComplete: onComplete, onError: onError)
+        }, onError: onError)
+    }
+    
+    private func executeUploadQuery(data: Data, onComplete: (() -> ())?, onError: (() -> ())?) {
+        let params = GTLRUploadParameters(data: data, mimeType: "application/json")
         params.shouldUploadWithSingleRequest = true
         
-        let query = GTLRDriveQuery_FilesCreate.query(withObject: targetFile, uploadParameters: params)
+        let file = GTLRDrive_File()
+        file.name = fileName
+        let query = GTLRDriveQuery_FilesCreate.query(withObject: file, uploadParameters: params)
         query.fields = "id"
         
         service.executeQuery(query, completionHandler: { (ticket, file, error) in
@@ -68,10 +80,27 @@ extension GoogleDriveManager {
         })
     }
     
-    func download(onComplete: (() -> ())?, onError: (() -> ())?) {
+    private func executeUpdateQuery(data: Data, fileId: String, onComplete: (() -> ())?, onError: (() -> ())?) {
+        let params = GTLRUploadParameters(data: data, mimeType: "application/json")
+        
+        let file = GTLRDrive_File()
+        file.name = fileName
+        let query = GTLRDriveQuery_FilesUpdate.query(withObject: file, fileId: fileId, uploadParameters: params)
+        query.fields = "id"
+        
+        service.executeQuery(query, completionHandler: { (ticket, file, error) in
+            guard error == nil else {
+                onError?()
+                return
+            }
+            onComplete?()
+        })
+    }
+    
+    private func executeFindQuery(onComplete: ((GTLRDrive_File) -> ())?, onError: (() -> ())?) {
         let query = GTLRDriveQuery_FilesList.query()
         query.pageSize = 1
-        query.q = "name contains '\(String(describing: targetFile.name!))'"
+        query.q = "name contains '\(String(describing: fileName))'"
         
         service.executeQuery(query) { (ticket, results, error) in
             if let error = error {
@@ -83,11 +112,12 @@ extension GoogleDriveManager {
                 onError?()
                 return
             }
-            self.fetch(file: file, onComplete: onComplete, onError: onError)
+            
+            onComplete?(file)
         }
     }
     
-    private func fetch(file: GTLRDrive_File, onComplete: (() -> ())?, onError: (() -> ())?) {
+    private func executeDownloadQuery(file: GTLRDrive_File, onComplete: (() -> ())?, onError: (() -> ())?) {
         guard let fileID = file.identifier else {
             onError?()
             return

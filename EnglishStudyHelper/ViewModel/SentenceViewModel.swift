@@ -6,10 +6,10 @@ class SentenceViewModel {
     weak var selectedSentence: Sentence?
     lazy var sentences = sentenceDataManager.read()
     private let sentenceDataManager = SentenceDataManager()
-    private(set) var onNext: [(Sentence) -> ()] = []
-    private(set) var onCreate: [() -> ()] = []
-    private(set) var onUpdate: [(String, String, String) -> ()] = []
-    private(set) var onDelete: [() -> ()] = []
+    private var onNext: [(Sentence) -> ()] = []
+    private var onCreate: [() -> ()] = []
+    private var onUpdate: [(String, String, String) -> ()] = []
+    private var onDelete: [() -> ()] = []
     
     private init() { }
     

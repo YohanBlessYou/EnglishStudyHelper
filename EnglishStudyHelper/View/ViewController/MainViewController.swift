@@ -90,8 +90,12 @@ class MainViewController: UIViewController {
         editingButton.addTarget(self, action: #selector(presentEditingVC), for: .touchUpInside)
         addButton.addTarget(self, action: #selector(presentSentenceAddingVC), for: .touchUpInside)
         
-        GoogleDriveViewModel.shared.registerHandler(onError: { [weak self] in
-            self?.presentBasicAlert(message: "로그인 실패")
+        GoogleDriveViewModel.shared.registerHandler(onUpload: { [weak self] in
+            self?.presentBasicAlert(message: "업로드 성공")
+        }, onDownload: { [weak self] in
+            self?.presentBasicAlert(message: "다운로드 성공")
+        }, onError: { [weak self] in
+            self?.presentBasicAlert(message: "에러 발생")
         })
     }
     

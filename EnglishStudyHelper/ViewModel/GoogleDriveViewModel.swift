@@ -4,9 +4,9 @@ class GoogleDriveViewModel {
     static let shared = GoogleDriveViewModel()
 
     private let googleDriveManager = GoogleDriveManager()
-    private(set) var onUpload: [() -> ()] = []
-    private(set) var onDownload: [() -> ()] = []
-    private(set) var onError: [() -> ()] = []
+    private var onUpload: [() -> ()] = []
+    private var onDownload: [() -> ()] = []
+    private var onError: [() -> ()] = []
     
     private init() { }
     
