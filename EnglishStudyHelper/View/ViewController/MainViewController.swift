@@ -1,79 +1,78 @@
 import UIKit
+import SwiftyDropbox
 
 class MainViewController: UIViewController {
-    private let startButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("시작", for: .normal)
-        button.titleLabel?.font = .preferredFont(forTextStyle: .title2)
-        button.setTitleColor(.systemBackground, for: .normal)
-        button.backgroundColor = .systemBlue
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+    private let logoImageView: UIImageView = {
+        let view = UIImageView(image: UIImage(named: "logo"))
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
-    private let editingButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("편집", for: .normal)
-        button.titleLabel?.font = .preferredFont(forTextStyle: .title2)
-        button.setTitleColor(.systemBackground, for: .normal)
-        button.backgroundColor = .systemYellow
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    private let addButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("문장추가", for: .normal)
-        button.titleLabel?.font = .preferredFont(forTextStyle: .title2)
-        button.setTitleColor(.systemBackground, for: .normal)
-        button.backgroundColor = .systemGreen
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    private lazy var dropboxLoginButton: ButtonStyleView = {
-        let icon = UIImage(named: "GoogleIcon")!
-        let button = ButtonStyleView(image: icon, title: "Dropbox 로그인")
+    private lazy var startButton: ButtonStyleView = {
+        let icon = UIImage(named: "play")!
+        let button = ButtonStyleView(image: icon, title: "시작하기")
         button.addTarget { [weak self] in
-            guard let target = self else { return }
-            DropboxManager.shared.authorize(target: target)
+            self?.navigationController?.pushViewController(StudyingViewController(), animated: true)
         }
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    private lazy var dropboxUploadingButton: ButtonStyleView = {
-        let icon = UIImage(named: "GoogleIcon")!
-        let button = ButtonStyleView(image: icon, title: "Dropbox 업로드")
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
+    private lazy var editingButton: ButtonStyleView = {
+        let icon = UIImage(named: "edit")!
+        let button = ButtonStyleView(image: icon, title: "편집하기")
         button.addTarget { [weak self] in
-            guard let target = self else { return }
-            DropboxManager.shared.upload(onComplete: { [weak self] in
-                self?.presentBasicAlert(message: "업로드 성공")
-            }, onError: { [weak self] errorMessage in
-                self?.presentBasicAlert(message: errorMessage)
-            })
+            self?.navigationController?.pushViewController(EditingViewController(), animated: true)
         }
-        
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    private lazy var dropboxDownloadingButton: ButtonStyleView = {
-        let icon = UIImage(named: "GoogleIcon")!
-        let button = ButtonStyleView(image: icon, title: "Dropbox 다운로드")
+    private lazy var addButton: ButtonStyleView = {
+        let icon = UIImage(named: "add")!
+        let button = ButtonStyleView(image: icon, title: "문장추가")
+        button.addTarget { [weak self] in
+            self?.present(AddingViewController(), animated: true)
+        }
         button.translatesAutoresizingMaskIntoConstraints = false
-        
+        return button
+    }()
+    
+    private lazy var dropboxButton: ButtonStyleView = {
+        let icon = UIImage(named: "dropbox")!
+        let button = ButtonStyleView(image: icon, title: "Dropbox")
         button.addTarget { [weak self] in
             guard let target = self else { return }
-            DropboxManager.shared.download(onComplete: { [weak self] in
-                self?.presentBasicAlert(message: "다운로드 성공")
-            }, onError: { [weak self] errorMessage in
-                self?.presentBasicAlert(message: errorMessage)
-            })
+            if DropboxClientsManager.authorizedClient == nil {
+                DropboxManager.shared.authorize(target: target)
+                return
+            }
+            
+            let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            let uploadAction = UIAlertAction(title: "내보내기", style: .default) { [weak self] _ in
+                self?.upload()
+            }
+            let downloadAction = UIAlertAction(title: "받아오기", style: .default) { [weak self] _ in
+                self?.download()
+            }
+            let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+            alert.addAction(uploadAction)
+            alert.addAction(downloadAction)
+            alert.addAction(cancelAction)
+            
+            self?.present(alert, animated: true)
         }
-        
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
+    }()
+    
+    private let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.spacing = 20.0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
     }()
     
     override func viewDidLoad() {
@@ -83,48 +82,47 @@ class MainViewController: UIViewController {
     
     private func initialize() {
         initAppearance()
-        initAction()
     }
     
     private func initAppearance() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = UIConfig.backgroundColor
         
-        let stackView = UIStackView(arrangedSubviews: [
-            startButton,
-            editingButton,
-            addButton,
-            dropboxLoginButton,
-            dropboxUploadingButton,
-            dropboxDownloadingButton
-        ])
-        stackView.axis = .vertical
-        stackView.distribution = .fillEqually
-        stackView.spacing = 20.0
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(logoImageView)
         view.addSubview(stackView)
+        stackView.addArrangedSubview(startButton)
+        stackView.addArrangedSubview(editingButton)
+        stackView.addArrangedSubview(addButton)
+        stackView.addArrangedSubview(dropboxButton)
+        
         NSLayoutConstraint.activate([
+            logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
+            logoImageView.heightAnchor.constraint(equalToConstant: 200),
+            logoImageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            logoImageView.widthAnchor.constraint(equalToConstant: 200),
+            
+            stackView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 50),
             stackView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.7),
             stackView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             stackView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 0.5),
-            stackView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor)
         ])
     }
-    
-    private func initAction() {
-        startButton.addTarget(self, action: #selector(presentStudyingVC), for: .touchUpInside)
-        editingButton.addTarget(self, action: #selector(presentEditingVC), for: .touchUpInside)
-        addButton.addTarget(self, action: #selector(presentSentenceAddingVC), for: .touchUpInside)
+}
+
+//MARK: - Dropbox
+extension MainViewController {
+    private func upload() {
+        DropboxManager.shared.upload(onComplete: { [weak self] in
+            self?.presentBasicAlert(message: "업로드 성공")
+        }, onError: { [weak self] errorMessage in
+            self?.presentBasicAlert(message: errorMessage)
+        })
     }
     
-    @objc private func presentStudyingVC() {
-        navigationController?.pushViewController(StudyingViewController(), animated: true)
-    }
-    
-    @objc private func presentEditingVC() {
-        navigationController?.pushViewController(EditingViewController(), animated: true)
-    }
-    
-    @objc private func presentSentenceAddingVC() {
-        present(AddingViewController(), animated: true)
+    private func download() {
+        DropboxManager.shared.download(onComplete: { [weak self] in
+            self?.presentBasicAlert(message: "다운로드 성공")
+        }, onError: { [weak self] errorMessage in
+            self?.presentBasicAlert(message: errorMessage)
+        })
     }
 }

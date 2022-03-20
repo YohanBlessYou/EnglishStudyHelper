@@ -47,7 +47,7 @@ class StudyingViewController: UIViewController {
     }
 
     private func initAppearance() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = UIConfig.backgroundColor
 
         view.addSubview(koreanView)
         view.addSubview(showSolutionButton)

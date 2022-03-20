@@ -25,6 +25,8 @@ class ButtonStyleView: UIView {
 
     convenience init(image: UIImage, title: String) {
         self.init(frame: CGRect())
+        backgroundColor = .white
+        layer.cornerRadius = 10
         
         imageView.image = image
         titleLabel.text = title

@@ -44,17 +44,20 @@ struct DropboxManager {
         }
         
         client.files.download(path: filePath, rev: nil)
-            .response(queue: .global()) { response, error in
+            .response(queue: .main) { response, error in
                 if let error = error {
-                    
+                    onError?(error.description)
+                    return
                 }
-//                guard let data = (file as? GTLRDataObject)?.data else {
-//                    onError?()
-//                    return
-//                }
-//                let sentences = try! JSONDecoder().decode([SentenceForJSON].self, from: data)
-//                self.synchronizeWithCoreData(newSentences: sentences)
-//                onComplete?()
+                
+                guard let data = response?.1 else {
+                    onError?("데이터가 올바르지 않습니다")
+                    return
+                }
+
+                let sentences = try! JSONDecoder().decode([SentenceForJSON].self, from: data)
+                self.updateToCoreData(sentences: sentences)
+                onComplete?()
             }
     }
     
@@ -76,7 +79,7 @@ struct DropboxManager {
         )
     }
     
-    private func updateToCoreData(fromDropbox sentences: [SentenceForJSON]) {
+    private func updateToCoreData(sentences: [SentenceForJSON]) {
         let outdatedSentences = SentenceManager.shared.all
         outdatedSentences.forEach { SentenceManager.shared.delete(id: $0.id!) }
 
