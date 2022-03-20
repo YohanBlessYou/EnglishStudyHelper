@@ -4,8 +4,7 @@
 target 'EnglishStudyHelper' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-  pod 'GoogleAPIClientForREST/Drive'
-  pod 'GoogleSignIn'
+  pod 'SwiftyDropbox', '8.2.1'
   # Pods for EnglishStudyHelper
 
   target 'EnglishStudyHelperTests' do

@@ -1,46 +1,20 @@
 PODS:
-  - AppAuth (1.4.0):
-    - AppAuth/Core (= 1.4.0)
-    - AppAuth/ExternalUserAgent (= 1.4.0)
-  - AppAuth/Core (1.4.0)
-  - AppAuth/ExternalUserAgent (1.4.0)
-  - GoogleAPIClientForREST/Core (1.7.0):
-    - GTMSessionFetcher (< 2.0, >= 1.6.1)
-  - GoogleAPIClientForREST/Drive (1.7.0):
-    - GoogleAPIClientForREST/Core
-    - GTMSessionFetcher (< 2.0, >= 1.6.1)
-  - GoogleSignIn (6.1.0):
-    - AppAuth (~> 1.4)
-    - GTMAppAuth (~> 1.0)
-    - GTMSessionFetcher/Core (~> 1.1)
-  - GTMAppAuth (1.2.2):
-    - AppAuth/Core (~> 1.4)
-    - GTMSessionFetcher/Core (~> 1.5)
-  - GTMSessionFetcher (1.7.0):
-    - GTMSessionFetcher/Full (= 1.7.0)
-  - GTMSessionFetcher/Core (1.7.0)
-  - GTMSessionFetcher/Full (1.7.0):
-    - GTMSessionFetcher/Core (= 1.7.0)
+  - Alamofire (5.4.4)
+  - SwiftyDropbox (8.2.1):
+    - Alamofire (~> 5.4.3)
 
 DEPENDENCIES:
-  - GoogleAPIClientForREST/Drive
-  - GoogleSignIn
+  - SwiftyDropbox (= 8.2.1)
 
 SPEC REPOS:
   trunk:
-    - AppAuth
-    - GoogleAPIClientForREST
-    - GoogleSignIn
-    - GTMAppAuth
-    - GTMSessionFetcher
+    - Alamofire
+    - SwiftyDropbox
 
 SPEC CHECKSUMS:
-  AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
-  GoogleAPIClientForREST: 2d4140915e2ec6d1bcb39c9df4a534c75706c595
-  GoogleSignIn: c90b5bec45e780f54c6a8e1e3c182a86e3dda69d
-  GTMAppAuth: ad5c2b70b9a8689e1a04033c9369c4915bfcbe89
-  GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
+  Alamofire: f3b09a368f1582ab751b3fff5460276e0d2cf5c9
+  SwiftyDropbox: f6c55aae36c4ea944fe6b35f807c19897f78b09b
 
-PODFILE CHECKSUM: d9daa03284c670b8195fb5ebadf2c2493ee42265
+PODFILE CHECKSUM: c09b05990de07d1cd5702e5499ee3a0bddb180f8
 
 COCOAPODS: 1.11.2

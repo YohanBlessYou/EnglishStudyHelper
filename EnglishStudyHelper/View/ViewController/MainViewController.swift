@@ -1,5 +1,4 @@
 import UIKit
-import GoogleSignIn
 
 class MainViewController: UIViewController {
     private let startButton: UIButton = {
@@ -32,24 +31,49 @@ class MainViewController: UIViewController {
         return button
     }()
     
-    private lazy var googleUploadingButton: ButtonStyleView = {
+    private lazy var dropboxLoginButton: ButtonStyleView = {
         let icon = UIImage(named: "GoogleIcon")!
-        let view = ButtonStyleView(image: icon, title: "클라우드 업로드") { [weak self] in
+        let button = ButtonStyleView(image: icon, title: "Dropbox 로그인")
+        button.addTarget { [weak self] in
             guard let target = self else { return }
-            GoogleDriveViewModel.shared.upload(target: target)
+            DropboxManager.shared.authorize(target: target)
         }
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
-    private lazy var googleDownloadingButton: ButtonStyleView = {
+    private lazy var dropboxUploadingButton: ButtonStyleView = {
         let icon = UIImage(named: "GoogleIcon")!
-        let view = ButtonStyleView(image: icon, title: "클라우드 다운로드") { [weak self] in
+        let button = ButtonStyleView(image: icon, title: "Dropbox 업로드")
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        button.addTarget { [weak self] in
             guard let target = self else { return }
-            GoogleDriveViewModel.shared.download(target: target)
+            DropboxManager.shared.upload(onComplete: { [weak self] in
+                self?.presentBasicAlert(message: "업로드 성공")
+            }, onError: { [weak self] errorMessage in
+                self?.presentBasicAlert(message: errorMessage)
+            })
         }
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+        
+        return button
+    }()
+    
+    private lazy var dropboxDownloadingButton: ButtonStyleView = {
+        let icon = UIImage(named: "GoogleIcon")!
+        let button = ButtonStyleView(image: icon, title: "Dropbox 다운로드")
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        button.addTarget { [weak self] in
+            guard let target = self else { return }
+            DropboxManager.shared.download(onComplete: { [weak self] in
+                self?.presentBasicAlert(message: "다운로드 성공")
+            }, onError: { [weak self] errorMessage in
+                self?.presentBasicAlert(message: errorMessage)
+            })
+        }
+        
+        return button
     }()
     
     override func viewDidLoad() {
@@ -69,8 +93,9 @@ class MainViewController: UIViewController {
             startButton,
             editingButton,
             addButton,
-            googleUploadingButton,
-            googleDownloadingButton
+            dropboxLoginButton,
+            dropboxUploadingButton,
+            dropboxDownloadingButton
         ])
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
@@ -89,14 +114,6 @@ class MainViewController: UIViewController {
         startButton.addTarget(self, action: #selector(presentStudyingVC), for: .touchUpInside)
         editingButton.addTarget(self, action: #selector(presentEditingVC), for: .touchUpInside)
         addButton.addTarget(self, action: #selector(presentSentenceAddingVC), for: .touchUpInside)
-        
-        GoogleDriveViewModel.shared.registerHandler(onUpload: { [weak self] in
-            self?.presentBasicAlert(message: "업로드 성공")
-        }, onDownload: { [weak self] in
-            self?.presentBasicAlert(message: "다운로드 성공")
-        }, onError: { [weak self] in
-            self?.presentBasicAlert(message: "에러 발생")
-        })
     }
     
     @objc private func presentStudyingVC() {

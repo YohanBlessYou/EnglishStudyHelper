@@ -23,11 +23,19 @@ class UpdatingViewController: UIViewController {
         return stackView
     }()
     
+    private weak var sentence: Sentence!
+    
+    convenience init(sentence: Sentence) {
+        self.init(nibName: nil, bundle: nil)
+        self.sentence = sentence
+        self.koreanView.textView.text = sentence.korean
+        self.englishView.textView.text = sentence.english
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         initAppearance()
         initAction()
-        initState()
     }
 
     private func initAppearance() {
@@ -55,22 +63,11 @@ class UpdatingViewController: UIViewController {
     }
     
     @objc private func updateSentence() {
-        guard let sentence = SentenceViewModel.shared.selectedSentence else {
-            presentBasicAlert(message: "에러 : selectedSentence == nil")
-            return
-        }
-        
-        SentenceViewModel.shared.update(
+        SentenceManager.shared.update(
             id: sentence.id!,
             korean: koreanView.textView.text,
             english: englishView.textView.text
         )
         dismiss(animated: true)
-    }
-    
-    private func initState() {
-        guard let sentence = SentenceViewModel.shared.selectedSentence else { return }
-        koreanView.textView.text = sentence.korean
-        englishView.textView.text = sentence.english
     }
 }

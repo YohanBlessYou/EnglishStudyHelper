@@ -23,7 +23,7 @@ class ButtonStyleView: UIView {
         super.init(coder: coder)
     }
 
-    convenience init(image: UIImage, title: String, action: (() -> ())?) {
+    convenience init(image: UIImage, title: String) {
         self.init(frame: CGRect())
         
         imageView.image = image
@@ -40,7 +40,9 @@ class ButtonStyleView: UIView {
             titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
         ])
-        
+    }
+    
+    func addTarget(_ action: @escaping () -> ()) {
         onTouch = action
     }
     

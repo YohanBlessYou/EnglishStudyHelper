@@ -72,7 +72,7 @@ class AddingViewController: UIViewController {
     }
     
     @objc private func addSentence() {
-        SentenceViewModel.shared.create(korean: koreanView.textView.text, english: englishView.textView.text)
+        SentenceManager.shared.create(korean: koreanView.textView.text, english: englishView.textView.text)
         dismiss(animated: true)
     }
     

@@ -29,6 +29,16 @@ class StudyingViewController: UIViewController {
         return button
     }()
     
+    private lazy var viewModel: StudyingViewModel = {
+        let viewModel = StudyingViewModel()
+        viewModel.onSelectedSentenceChanged = { [weak self] sentence in
+            self?.koreanView.textView.text = sentence?.korean
+            self?.englishView.textView.text = sentence?.english
+            self?.englishView.textView.textColor = self?.englishView.textView.backgroundColor
+        }
+        return viewModel
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initAppearance()
@@ -63,18 +73,6 @@ class StudyingViewController: UIViewController {
     }
     
     private func initAction() {
-        SentenceViewModel.shared.registerHandler(onNext: { [weak self] newSentence in
-            self?.koreanView.textView.text = newSentence.korean
-            self?.englishView.textView.text = newSentence.english
-            self?.englishView.textView.textColor = self?.englishView.textView.backgroundColor
-        }, onUpdate: { [weak self] id, korean, english in
-            guard id == SentenceViewModel.shared.selectedSentence?.id else { return }
-            self?.koreanView.textView.text = korean
-            self?.englishView.textView.text = english
-        }, onDelete: {
-            SentenceViewModel.shared.toNext()
-        })
-
         showSolutionButton.addTarget(self, action: #selector(toggleEnglishHiding), for: .touchUpInside)
         nextButton.addTarget(self, action: #selector(updateNextSentence), for: .touchUpInside)
         
@@ -95,7 +93,7 @@ class StudyingViewController: UIViewController {
     }
     
     @objc private func updateNextSentence() {
-        SentenceViewModel.shared.toNext()
+        viewModel.toNext()
     }
     
     @objc private func presentOption() {
@@ -103,11 +101,8 @@ class StudyingViewController: UIViewController {
         let updateAction = UIAlertAction(title: "수정", style: .default) { [weak self] _ in
             self?.present(UpdatingViewController(), animated: true)
         }
-        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { _ in
-            guard let sentenceId = SentenceViewModel.shared.selectedSentence?.id else {
-                return
-            }
-            SentenceViewModel.shared.delete(id: sentenceId)
+        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { [weak self] _ in
+            self?.viewModel.delete()
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         alert.addAction(updateAction)
@@ -117,6 +112,6 @@ class StudyingViewController: UIViewController {
     }
     
     private func initState() {
-        SentenceViewModel.shared.toNext()
+        viewModel.toNext()
     }
 }
