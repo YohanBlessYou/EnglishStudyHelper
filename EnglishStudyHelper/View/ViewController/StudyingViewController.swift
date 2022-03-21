@@ -68,7 +68,7 @@ class StudyingViewController: UIViewController {
             englishView.topAnchor.constraint(equalTo: nextButton.bottomAnchor, constant: 10),
             englishView.leadingAnchor.constraint(equalTo: koreanView.leadingAnchor),
             englishView.trailingAnchor.constraint(equalTo: koreanView.trailingAnchor),
-            englishView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            englishView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
         ])
     }
     

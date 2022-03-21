@@ -35,9 +35,10 @@ class ButtonStyleView: UIView {
         
         NSLayoutConstraint.activate([
             imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            imageView.heightAnchor.constraint(equalToConstant: 50),
-            imageView.widthAnchor.constraint(equalToConstant: 50),
+            imageView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+            imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor),
+            
             titleLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 20),
             titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
