@@ -1,8 +1,9 @@
 import UIKit
 
 class SimpleSquareView: UIView {
-    let label: UILabel = {
+    let titleLabel: UILabel = {
         let label = UILabel()
+        label.textColor = UIConfig.textColor
         label.font = .preferredFont(forTextStyle: .title3)
         label.setContentHuggingPriority(.defaultHigh, for: .vertical)
         return label
@@ -10,6 +11,8 @@ class SimpleSquareView: UIView {
     
     let textView: UITextView = {
         let textView = UITextView()
+        textView.backgroundColor = UIConfig.bigContentColor
+        textView.textColor = UIConfig.textColor
         textView.font = .preferredFont(forTextStyle: .body)
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.systemGray.cgColor
@@ -27,7 +30,7 @@ class SimpleSquareView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(stackView)
-        stackView.addArrangedSubview(label)
+        stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(textView)
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: topAnchor),
@@ -43,7 +46,7 @@ class SimpleSquareView: UIView {
     
     convenience init(title: String, isEditable: Bool = true) {
         self.init(frame: CGRect())
-        label.text = title
+        titleLabel.text = title
         textView.isEditable = isEditable
     }
 }

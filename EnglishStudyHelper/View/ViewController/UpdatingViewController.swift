@@ -39,7 +39,7 @@ class UpdatingViewController: UIViewController {
     }
 
     private func initAppearance() {
-        view.backgroundColor = UIConfig.backgroundColor
+        view.backgroundColor = UIConfig.overallColor
         
         view.addSubview(updatingButton)
         view.addSubview(stackView)

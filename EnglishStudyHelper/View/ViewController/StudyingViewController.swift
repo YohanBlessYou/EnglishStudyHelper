@@ -47,8 +47,8 @@ class StudyingViewController: UIViewController {
     }
 
     private func initAppearance() {
-        view.backgroundColor = UIConfig.backgroundColor
-
+        view.backgroundColor = UIConfig.overallColor
+        
         view.addSubview(koreanView)
         view.addSubview(showSolutionButton)
         view.addSubview(nextButton)
@@ -85,10 +85,10 @@ class StudyingViewController: UIViewController {
     }
     
     @objc private func toggleEnglishHiding() {
-        if englishView.textView.textColor == .label {
-            englishView.textView.textColor = englishView.textView.backgroundColor
+        if englishView.textView.textColor == englishView.textView.backgroundColor {
+            englishView.textView.textColor = koreanView.textView.textColor
         } else {
-            englishView.textView.textColor = .label
+            englishView.textView.textColor = englishView.textView.backgroundColor
         }
     }
     

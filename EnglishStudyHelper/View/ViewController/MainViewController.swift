@@ -85,8 +85,8 @@ class MainViewController: UIViewController {
     }
     
     private func initAppearance() {
-        view.backgroundColor = UIConfig.backgroundColor
-        
+        view.backgroundColor = UIConfig.overallColor
+
         view.addSubview(logoImageView)
         view.addSubview(stackView)
         stackView.addArrangedSubview(startButton)

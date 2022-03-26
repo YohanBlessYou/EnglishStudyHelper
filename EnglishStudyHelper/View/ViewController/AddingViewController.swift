@@ -37,7 +37,7 @@ class AddingViewController: UIViewController {
     }
 
     private func initAppearance() {
-        view.backgroundColor = UIConfig.backgroundColor
+        view.backgroundColor = UIConfig.overallColor
         
         view.addSubview(addButton)
         view.addSubview(koreanView)

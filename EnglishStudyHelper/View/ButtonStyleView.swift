@@ -9,8 +9,9 @@ class ButtonStyleView: UIView {
     }()
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .title2)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = UIConfig.textColor
+        label.font = UIConfig.textFont
         return label
     }()
     private var onTouch: (() -> ())?
@@ -25,7 +26,7 @@ class ButtonStyleView: UIView {
 
     convenience init(image: UIImage, title: String) {
         self.init(frame: CGRect())
-        backgroundColor = .white
+        backgroundColor = UIConfig.bigContentColor
         layer.cornerRadius = 10
         
         imageView.image = image

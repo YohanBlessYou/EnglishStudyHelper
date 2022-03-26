@@ -13,7 +13,8 @@ class EditingViewController: UIViewController {
     }
     
     private func initAppearance() {
-        view.backgroundColor = UIConfig.backgroundColor
+        view.backgroundColor = UIConfig.overallColor
+        tableView.backgroundColor = UIConfig.bigContentColor
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
@@ -47,10 +48,11 @@ extension EditingViewController: UITableViewDataSource, UITableViewDelegate {
         backgroundView.layer.cornerRadius = 10
         backgroundView.backgroundColor = .systemBlue
         cell.selectedBackgroundView = backgroundView
+
+        cell.backgroundColor = UIConfig.bigContentColor
+        cell.textLabel?.text = SentenceManager.shared.all[indexPath.row].korean
+        cell.textLabel?.textColor = UIConfig.textColor
         
-        var configuration = cell.defaultContentConfiguration()
-        configuration.text = SentenceManager.shared.all[indexPath.row].korean
-        cell.contentConfiguration = configuration
         return cell
     }
     
