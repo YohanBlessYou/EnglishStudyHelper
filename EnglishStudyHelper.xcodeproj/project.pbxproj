@@ -560,6 +560,7 @@
 				DEVELOPMENT_TEAM = 6NYKF9N93F;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EnglishStudyHelper/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "야잉마";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -570,7 +571,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = JNoma.EnglishStudyHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -591,6 +592,7 @@
 				DEVELOPMENT_TEAM = 6NYKF9N93F;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EnglishStudyHelper/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "야잉마";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -601,7 +603,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = JNoma.EnglishStudyHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
