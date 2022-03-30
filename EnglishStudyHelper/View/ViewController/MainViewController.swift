@@ -38,22 +38,30 @@ class MainViewController: UIViewController {
         return button
     }()
     
-    private lazy var dropboxButton: ButtonStyleView = {
-        let icon = UIImage(named: "dropbox")!
-        let button = ButtonStyleView(image: icon, title: "Dropbox")
+    private lazy var iCloudButton: ButtonStyleView = {
+        let icon = UIImage(named: "cloud")!
+        let button = ButtonStyleView(image: icon, title: "iCloud")
         button.addTarget { [weak self] in
-            guard let target = self else { return }
-            if DropboxClientsManager.authorizedClient == nil {
-                DropboxManager.shared.authorize(target: target)
-                return
-            }
-            
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let uploadAction = UIAlertAction(title: "내보내기", style: .default) { [weak self] _ in
-                self?.upload()
+            let uploadAction = UIAlertAction(title: "업로드", style: .default) { [weak self] _ in
+                CloudManager.shared.save { [weak self] result in
+                    switch result {
+                    case .success:
+                        self?.presentBasicAlert(message: "업로드 성공")
+                    case .failure(let error):
+                        self?.presentBasicAlert(message: "업로드 실패\n\(error.localizedDescription)")
+                    }
+                }
             }
-            let downloadAction = UIAlertAction(title: "받아오기", style: .default) { [weak self] _ in
-                self?.download()
+            let downloadAction = UIAlertAction(title: "다운로드", style: .default) { [weak self] _ in
+                CloudManager.shared.fetch { [weak self] result in
+                    switch result {
+                    case .success:
+                        self?.presentBasicAlert(message: "다운로드 성공")
+                    case .failure(let error):
+                        self?.presentBasicAlert(message: "다운로드 실패\n\(error.localizedDescription)")
+                    }
+                }
             }
             let cancelAction = UIAlertAction(title: "취소", style: .cancel)
             alert.addAction(uploadAction)
@@ -92,7 +100,7 @@ class MainViewController: UIViewController {
         stackView.addArrangedSubview(startButton)
         stackView.addArrangedSubview(editingButton)
         stackView.addArrangedSubview(addButton)
-        stackView.addArrangedSubview(dropboxButton)
+        stackView.addArrangedSubview(iCloudButton)
         
         NSLayoutConstraint.activate([
             logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
@@ -105,24 +113,5 @@ class MainViewController: UIViewController {
             stackView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             stackView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 0.5),
         ])
-    }
-}
-
-//MARK: - Dropbox
-extension MainViewController {
-    private func upload() {
-        DropboxManager.shared.upload(onComplete: { [weak self] in
-            self?.presentBasicAlert(message: "업로드 성공")
-        }, onError: { [weak self] errorMessage in
-            self?.presentBasicAlert(message: errorMessage)
-        })
-    }
-    
-    private func download() {
-        DropboxManager.shared.download(onComplete: { [weak self] in
-            self?.presentBasicAlert(message: "다운로드 성공")
-        }, onError: { [weak self] errorMessage in
-            self?.presentBasicAlert(message: errorMessage)
-        })
     }
 }

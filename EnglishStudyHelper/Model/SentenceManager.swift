@@ -35,12 +35,17 @@ extension SentenceManager {
         return try? persistentContainer.viewContext.fetch(fetchRequest).first
     }
     
-    func create(korean: String, english: String) {
+    func create(
+        id: String = UUID().uuidString,
+        createdAt: Double = Date().timeIntervalSince1970,
+        korean: String,
+        english: String
+    ) {
         let sentence = Sentence(context: persistentContainer.viewContext)
-        sentence.id = UUID().uuidString
+        sentence.id = id
         sentence.korean = korean
         sentence.english = english
-        sentence.createdAt = Date().timeIntervalSince1970
+        sentence.createdAt = createdAt
         try? persistentContainer.viewContext.save()
         NotificationCenter.default.post(name: notificationName, object: nil)
     }
@@ -61,5 +66,11 @@ extension SentenceManager {
         }
         persistentContainer.viewContext.delete(sentence)
         NotificationCenter.default.post(name: notificationName, object: nil)
+    }
+    
+    func deleteAll() {
+        all.forEach {
+            delete(id: $0.id!)
+        }
     }
 }

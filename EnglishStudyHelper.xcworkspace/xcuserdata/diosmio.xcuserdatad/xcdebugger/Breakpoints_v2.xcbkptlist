@@ -167,33 +167,65 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D073D535-B2DD-4342-BBCA-104751950DD0"
+            uuid = "4438EDDB-7ED9-4FA1-9BDB-D67EA1E6B0C2"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "EnglishStudyHelper/View/ViewController/MainViewController.swift"
+            filePath = "EnglishStudyHelper/Model/CloudManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "dropboxButton"
-            landmarkType = "24">
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "fetch(completion:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "AA4D86A6-D44A-47B3-95C1-7E16243837FD"
-            shouldBeEnabled = "No"
+            uuid = "EDCE9127-DA68-453D-81E4-37DE5B3CF81D"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "EnglishStudyHelper/View/ViewController/MainViewController.swift"
+            filePath = "EnglishStudyHelper/Model/CloudManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
-            landmarkName = "dropboxButton"
-            landmarkType = "24">
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "fetch(completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "EDCE9127-DA68-453D-81E4-37DE5B3CF81D - 84e7df721c33995f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in EnglishStudyHelper.CloudManager.fetchAll(completion: (Swift.Result&lt;Swift.String, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "EnglishStudyHelper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/diosmio/Desktop/Noma/EnglishStudyHelper/EnglishStudyHelper/Model/CloudManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "66"
+                  endingLineNumber = "66"
+                  offsetFromSymbolStart = "499">
+               </Location>
+               <Location
+                  uuid = "EDCE9127-DA68-453D-81E4-37DE5B3CF81D - 84e7df721c33995f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in EnglishStudyHelper.CloudManager.fetchAll(completion: (Swift.Result&lt;Swift.String, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "EnglishStudyHelper"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/diosmio/Desktop/Noma/EnglishStudyHelper/EnglishStudyHelper/Model/CloudManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "66"
+                  endingLineNumber = "66"
+                  offsetFromSymbolStart = "544">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
