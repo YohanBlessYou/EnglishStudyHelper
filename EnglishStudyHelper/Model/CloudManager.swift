@@ -10,19 +10,58 @@ class CloudManager {
     
     private let container = CKContainer(identifier: "iCloud.EnglishStudyHelper")
     private let recordType = "KoreanEnglishSentence"
-    private let dispatchQueue = DispatchQueue(label: "CloudManager")
+    private let mainDispatchQueue = DispatchQueue(label: "MainQueue")
+    private let subDispatchQueue = DispatchQueue(label: "SubQueue")
     
     func save(completion: @escaping (Result<String, Error>) -> ()) {
-        dispatchQueue.async {
+        mainDispatchQueue.async {
             //1. CoreData 읽기
-            let sentences = SentenceManager.shared.all
-            
-            //2. iCloud 저장
             var error: Error? = nil
+            var records: [CKRecord] = []
             
+            let result = self._fetch()
+            
+            switch result {
+            case .success(let fetchRecords):
+                records = fetchRecords
+            case .failure(let fetchError):
+                error = fetchError
+            }
+            
+            if let error = error {
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
+            }
+
+            //2. iCloud 삭제
             let group = DispatchGroup()
             group.enter()
-            sentences.forEach { sentence in
+            records.forEach { record in
+                DispatchQueue.global().async {
+                    let result = self._delete(id: record["id"] as! String)
+                    switch result {
+                    case .success:
+                        break
+                    case .failure(let deleteError):
+                        error = deleteError
+                    }
+                    group.leave()
+                }
+                group.enter()
+            }
+            group.leave()
+            group.wait()
+            
+            if let error = error {
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
+            }
+            
+            //2. iCloud 저장
+            group.enter()
+            SentenceManager.shared.all.forEach { sentence in
                 DispatchQueue.global().async {
                     let result = self._save(sentence: sentence)
                     switch result {
@@ -49,7 +88,7 @@ class CloudManager {
     }
     
     func fetch(completion: @escaping (Result<String, Error>) -> ()) {
-        dispatchQueue.async {
+        mainDispatchQueue.async {
             //1. iCloud 불러오기
             var error: Error? = nil
             var records: [CKRecord] = []
@@ -127,7 +166,7 @@ class CloudManager {
         operation.recordMatchedBlock = { [weak self] recordID, result in
             switch result {
             case .success(let record):
-                self?.dispatchQueue.sync {
+                self?.subDispatchQueue.sync {
                     records.append(record)
                 }
             case .failure(let error):
@@ -151,6 +190,61 @@ class CloudManager {
             return .failure(error)
         } else {
             return .success(records)
+        }
+    }
+
+    private func _delete(id: String) -> Result<String, Error> {
+        // READ
+        let predicate = NSPredicate(format: "id == %@", id)
+        let query = CKQuery(recordType: recordType, predicate: predicate)
+        let operation = CKQueryOperation(query: query)
+        operation.database = container.privateCloudDatabase
+        
+        let group = DispatchGroup()
+        var record: CKRecord! = nil
+        var error: Error? = nil
+        
+        operation.recordMatchedBlock = { _, result in
+            switch result {
+            case .success(let operationRecord):
+                record = operationRecord
+            case .failure(let operationError):
+                error = operationError
+            }
+        }
+        operation.queryResultBlock = { result in
+            switch result {
+            case .success:
+                break
+            case .failure(let operationError):
+                error = operationError
+            }
+            group.leave()
+        }
+        group.enter()
+        operation.start()
+        group.wait()
+        
+        if let error = error {
+            return .failure(error)
+        }
+        
+        // DELETE
+        guard let record = record else {
+            return .failure(CloudError.recordIsNil)
+        }
+        
+        group.enter()
+        container.privateCloudDatabase.delete(withRecordID: record.recordID) { _, deleteError in
+            error = deleteError
+            group.leave()
+        }
+        group.wait()
+        
+        if let error = error {
+            return .failure(error)
+        } else {
+            return .success("삭제 성공")
         }
     }
 }
