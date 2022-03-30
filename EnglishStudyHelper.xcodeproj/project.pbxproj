@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6008611F27E5F3F20082FD17 /* DropboxManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6008611E27E5F3F20082FD17 /* DropboxManager.swift */; };
 		6008612327E62DE70082FD17 /* StudyingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6008612227E62DE70082FD17 /* StudyingViewModel.swift */; };
 		600B8EC727CFDC69002ADF4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 600B8EC627CFDC69002ADF4E /* Assets.xcassets */; };
 		600B8ECA27CFDC69002ADF4E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 600B8EC827CFDC69002ADF4E /* LaunchScreen.storyboard */; };
@@ -48,7 +47,6 @@
 /* Begin PBXFileReference section */
 		1AE9C6D71270650B42699FCE /* Pods-EnglishStudyHelperTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EnglishStudyHelperTests.debug.xcconfig"; path = "Target Support Files/Pods-EnglishStudyHelperTests/Pods-EnglishStudyHelperTests.debug.xcconfig"; sourceTree = "<group>"; };
 		1F6058043C2D91E89800B329 /* Pods-EnglishStudyHelper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EnglishStudyHelper.release.xcconfig"; path = "Target Support Files/Pods-EnglishStudyHelper/Pods-EnglishStudyHelper.release.xcconfig"; sourceTree = "<group>"; };
-		6008611E27E5F3F20082FD17 /* DropboxManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropboxManager.swift; sourceTree = "<group>"; };
 		6008612227E62DE70082FD17 /* StudyingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyingViewModel.swift; sourceTree = "<group>"; };
 		600B8EBA27CFDC68002ADF4E /* EnglishStudyHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EnglishStudyHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		600B8EC627CFDC69002ADF4E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -189,7 +187,6 @@
 				606CE03627F064FF00E8FFFB /* CloudManager.swift */,
 				6033FAF027DA4737005A7537 /* NetworkRequester.swift */,
 				6033FAF227DA47A5005A7537 /* PapagoManager.swift */,
-				6008611E27E5F3F20082FD17 /* DropboxManager.swift */,
 				604A948D27D06927007CCCD5 /* Sentence.xcdatamodeld */,
 			);
 			path = Model;
@@ -395,7 +392,6 @@
 				6033FAF527DA4F67005A7537 /* UserInfo.swift in Sources */,
 				601031E127E39F3B0034FBC5 /* ButtonStyleView.swift in Sources */,
 				60AAE29C27E771F60089BD08 /* UIConfig.swift in Sources */,
-				6008611F27E5F3F20082FD17 /* DropboxManager.swift in Sources */,
 				604A948F27D06927007CCCD5 /* Sentence.xcdatamodeld in Sources */,
 				604A949127D06983007CCCD5 /* SentenceManager.swift in Sources */,
 				601031E227E39F3B0034FBC5 /* SimpleSquareView.swift in Sources */,
