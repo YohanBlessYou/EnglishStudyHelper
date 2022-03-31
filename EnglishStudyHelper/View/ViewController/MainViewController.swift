@@ -1,5 +1,4 @@
 import UIKit
-import SwiftyDropbox
 
 class MainViewController: UIViewController {
     private let logoImageView: UIImageView = {

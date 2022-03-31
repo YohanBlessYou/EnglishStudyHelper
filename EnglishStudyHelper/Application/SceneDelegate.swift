@@ -1,5 +1,4 @@
 import UIKit
-import SwiftyDropbox
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
