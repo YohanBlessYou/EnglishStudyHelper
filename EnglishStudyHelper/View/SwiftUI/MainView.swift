@@ -6,10 +6,14 @@ struct MainView: View {
             HStack {
                 VStack(alignment: .center, spacing: 20) {
                     Image("logo")
+                        .resizable()
+                        .frame(width: geometry.size.width * 0.65, height: geometry.size.width * 0.65, alignment: .center)
                     Button(
                         action: {},
                         label: {
                             Image("play")
+                                .resizable()
+                                .frame(width: geometry.size.width * 0.15, height: geometry.size.width * 0.15, alignment: .center)
                             Text("시작하기")
                                 .font(Font(UIConfig.textFont))
                                 .foregroundColor(.black)
@@ -24,6 +28,8 @@ struct MainView: View {
                         action: {},
                         label: {
                             Image("edit")
+                                .resizable()
+                                .frame(width: geometry.size.width * 0.15, height: geometry.size.width * 0.15, alignment: .center)
                             Text("편집하기")
                                 .font(Font(UIConfig.textFont))
                                 .foregroundColor(.black)
@@ -38,6 +44,8 @@ struct MainView: View {
                         action: {},
                         label: {
                             Image("add")
+                                .resizable()
+                                .frame(width: geometry.size.width * 0.15, height: geometry.size.width * 0.15, alignment: .center)
                             Text("문장추가")
                                 .font(Font(UIConfig.textFont))
                                 .foregroundColor(.black)
@@ -52,6 +60,8 @@ struct MainView: View {
                         action: {},
                         label: {
                             Image("cloud")
+                                .resizable()
+                                .frame(width: geometry.size.width * 0.15, height: geometry.size.width * 0.15, alignment: .center)
                             Text("iCloud")
                                 .font(Font(UIConfig.textFont))
                                 .foregroundColor(.black)
