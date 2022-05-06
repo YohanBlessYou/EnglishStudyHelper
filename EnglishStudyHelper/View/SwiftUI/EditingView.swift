@@ -17,9 +17,3 @@ struct EditingView: View {
         }.background(Color(UIConfig.overallColor))
     }
 }
-
-struct EditingView_Previews: PreviewProvider {
-    static var previews: some View {
-        EditingView()
-    }
-}

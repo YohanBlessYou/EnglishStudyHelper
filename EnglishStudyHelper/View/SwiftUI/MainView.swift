@@ -2,7 +2,10 @@ import SwiftUI
 
 struct MainView: View {
     @State private var showingAddingModal = false
-
+    @State private var showingCloudActionsheet = false
+    @State private var showingAlert = false
+    @State private var alertMessage = ""
+    
     var body: some View {
         NavigationView {
             GeometryReader { geometry in
@@ -62,10 +65,12 @@ struct MainView: View {
                             .background(Color(UIConfig.bigContentColor))
                             .cornerRadius(10)
                             .sheet(isPresented: self.$showingAddingModal) {
-                                            AddingView()
-                                        }
+                                AddingView(showingAddingModal: self.$showingAddingModal)
+                            }
                         Button(
-                            action: {},
+                            action: {
+                                showingCloudActionsheet.toggle()
+                            },
                             label: {
                                 Image("cloud")
                                     .resizable()
@@ -80,17 +85,40 @@ struct MainView: View {
                             .padding(.leading, 15)
                             .background(Color(UIConfig.bigContentColor))
                             .cornerRadius(10)
+                            .confirmationDialog("", isPresented: $showingCloudActionsheet, titleVisibility: .automatic) {
+                                Button("업로드") {
+                                    self.alertMessage = "무조건 업로드 성공"
+                                    self.showingAlert.toggle()
+//                                    CloudManager.shared.save { result in
+//                                        switch result {
+//                                        case .success:
+//                                            self.alertMessage = "업로드 성공"
+//                                        case .failure(let error):
+//                                            self.alertMessage = "업로드 실패\n\(error.localizedDescription)"
+//                                        }
+//                                        self.showingAlert = true
+//                                    }
+                                }
+                                Button("다운로드") {
+                                    CloudManager.shared.fetch { result in
+                                        switch result {
+                                        case .success:
+                                            self.alertMessage = "다운로드 성공"
+                                        case .failure(let error):
+                                            self.alertMessage = "다운로드 실패\n\(error.localizedDescription)"
+                                        }
+                                    }
+                                    self.showingAlert.toggle()
+                                }
+                                Button("취소", role: .cancel) {
+                                    
+                                }
+                            }.alert(isPresented: $showingAlert) {
+                                Alert(title: Text(""), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                            }
                     }.frame(width: geometry.size.width * 0.7, height: nil, alignment: .center)
                 }.frame(width: geometry.size.width, height: geometry.size.height, alignment: .center)
             }.background(Color(UIConfig.overallColor))
         }
     }
 }
-
-#if DEBUG
-struct MainView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainView()
-    }
-}
-#endif

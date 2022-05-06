@@ -71,11 +71,3 @@ struct StudyingView: View {
             }
     }
 }
-
-#if DEBUG
-struct StudyingView_Previews: PreviewProvider {
-    static var previews: some View {
-        StudyingView()
-    }
-}
-#endif
