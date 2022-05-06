@@ -17,6 +17,7 @@ struct StudyingView: View {
                     .padding(.vertical, 10)
                     .padding(.leading, 50)
                     .font(.title3)
+                    .foregroundColor(.black)
                 TextView(text: $korean)
                     .frame(
                         width: geometry.size.width * 0.9,
@@ -49,6 +50,7 @@ struct StudyingView: View {
                     .padding(.vertical, 10)
                     .padding(.leading, 50)
                     .font(.title3)
+                    .foregroundColor(.black)
                 TextView(text: $korean)
                     .frame(
                         width: geometry.size.width * 0.9,
@@ -58,6 +60,15 @@ struct StudyingView: View {
                     .border(.gray, width: 1)
             }.frame(width: geometry.size.width, height: geometry.size.height, alignment: .center)
         }.background(Color(UIConfig.overallColor))
+            .navigationBarTitle("", displayMode: .inline)
+            .toolbar {
+                Button(action: {
+                    
+                }, label: {
+                    Image(systemName: "ellipsis.circle")
+                        .foregroundColor(.blue)
+                })
+            }
     }
 }
 

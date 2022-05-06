@@ -9,7 +9,11 @@ struct EditingView: View {
         GeometryReader { geometry in
             List(sentences){ sentence in
                 Text(sentence.korean!)
-            }.background(Color(UIConfig.overallColor))
+                    .foregroundColor(.black)
+                    .listRowBackground(Color.white)
+            }.onAppear {
+                UITableView.appearance().backgroundColor = UIConfig.overallColor
+            }
         }.background(Color(UIConfig.overallColor))
     }
 }

@@ -1,16 +1,13 @@
 import SwiftUI
 
 struct AddingView: View {
-    
-    @State
-    private var korean: String = ""
-    
-    @State
-    private var english: String = ""
+    @State private var korean: String = ""
+    @State private var english: String = ""
     
     var body: some View {
         GeometryReader { geometry in
             VStack {
+                Spacer(minLength: 30)
                 Button(
                     action: {},
                     label: {
@@ -32,6 +29,7 @@ struct AddingView: View {
                     .padding(.vertical, 10)
                     .padding(.leading, 50)
                     .font(.title3)
+                    .foregroundColor(.black)
                 TextView(text: $korean)
                     .frame(
                         width: geometry.size.width * 0.9,
@@ -51,6 +49,7 @@ struct AddingView: View {
                     .padding(.vertical, 10)
                     .padding(.leading, 50)
                     .font(.title3)
+                    .foregroundColor(.black)
                 TextView(text: $korean)
                     .frame(
                         width: geometry.size.width * 0.9,
@@ -59,7 +58,7 @@ struct AddingView: View {
                     )
                     .border(.gray, width: 1)
             }.frame(width: geometry.size.width, height: geometry.size.height, alignment: .center)
-        }
+        }.background(Color(UIConfig.overallColor))
     }
 }
 
