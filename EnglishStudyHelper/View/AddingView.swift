@@ -42,7 +42,7 @@ struct AddingView: View {
                     .padding(.leading, 50)
                     .font(.title3)
                     .foregroundColor(.black)
-                TextView(text: $korean)
+                SimpleTextView(text: $korean)
                     .frame(
                         width: geometry.size.width * 0.9,
                         height: nil,
@@ -89,7 +89,7 @@ struct AddingView: View {
                     .padding(.leading, 50)
                     .font(.title3)
                     .foregroundColor(.black)
-                TextView(text: $english)
+                SimpleTextView(text: $english)
                     .frame(
                         width: geometry.size.width * 0.9,
                         height: nil,

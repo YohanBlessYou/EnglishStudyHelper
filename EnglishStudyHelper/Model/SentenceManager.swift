@@ -6,8 +6,6 @@ class SentenceManager {
     
     private init() {}
     
-    let notificationName = Notification.Name("data changed")
-
     private let persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Sentence")
         container.loadPersistentStores(completionHandler: { (_, error) in
@@ -47,7 +45,6 @@ extension SentenceManager {
         sentence.english = english
         sentence.createdAt = createdAt
         try? persistentContainer.viewContext.save()
-        NotificationCenter.default.post(name: notificationName, object: nil)
     }
     
     func update(id: String, korean: String, english: String) {
@@ -55,7 +52,6 @@ extension SentenceManager {
         sentence.korean = korean
         sentence.english = english
         try? persistentContainer.viewContext.save()
-        NotificationCenter.default.post(name: notificationName, object: nil)
     }
     
     func delete(id: String) {
@@ -65,8 +61,6 @@ extension SentenceManager {
             return
         }
         persistentContainer.viewContext.delete(sentence)
-        
-        NotificationCenter.default.post(name: notificationName, object: nil)
     }
     
     func deleteAll() {

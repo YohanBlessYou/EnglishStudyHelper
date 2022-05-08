@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct TextView: UIViewRepresentable {
+struct SimpleTextView: UIViewRepresentable {
 
     @Binding var text: String
 
