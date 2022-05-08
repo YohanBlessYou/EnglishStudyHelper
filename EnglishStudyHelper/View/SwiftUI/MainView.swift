@@ -69,7 +69,7 @@ struct MainView: View {
                             }
                         Button(
                             action: {
-                                showingCloudActionsheet.toggle()
+                                showingCloudActionsheet = true
                             },
                             label: {
                                 Image("cloud")
@@ -87,17 +87,15 @@ struct MainView: View {
                             .cornerRadius(10)
                             .confirmationDialog("", isPresented: $showingCloudActionsheet, titleVisibility: .automatic) {
                                 Button("업로드") {
-                                    self.alertMessage = "무조건 업로드 성공"
-                                    self.showingAlert.toggle()
-//                                    CloudManager.shared.save { result in
-//                                        switch result {
-//                                        case .success:
-//                                            self.alertMessage = "업로드 성공"
-//                                        case .failure(let error):
-//                                            self.alertMessage = "업로드 실패\n\(error.localizedDescription)"
-//                                        }
-//                                        self.showingAlert = true
-//                                    }
+                                    CloudManager.shared.save { result in
+                                        switch result {
+                                        case .success:
+                                            self.alertMessage = "업로드 성공"
+                                        case .failure(let error):
+                                            self.alertMessage = "업로드 실패\n\(error.localizedDescription)"
+                                        }
+                                        self.showingAlert = true
+                                    }
                                 }
                                 Button("다운로드") {
                                     CloudManager.shared.fetch { result in
@@ -107,8 +105,8 @@ struct MainView: View {
                                         case .failure(let error):
                                             self.alertMessage = "다운로드 실패\n\(error.localizedDescription)"
                                         }
+                                        self.showingAlert = true
                                     }
-                                    self.showingAlert.toggle()
                                 }
                                 Button("취소", role: .cancel) {
                                     

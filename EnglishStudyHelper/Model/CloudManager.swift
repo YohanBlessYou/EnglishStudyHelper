@@ -32,6 +32,7 @@ class CloudManager {
                 DispatchQueue.main.async {
                     completion(.failure(error))
                 }
+                return
             }
 
             //2. iCloud 삭제
@@ -57,6 +58,7 @@ class CloudManager {
                 DispatchQueue.main.async {
                     completion(.failure(error))
                 }
+                return
             }
             
             //2. iCloud 저장
@@ -106,6 +108,7 @@ class CloudManager {
                 DispatchQueue.main.async {
                     completion(.failure(error))
                 }
+                return
             }
             
             //2. CoreData 삭제
@@ -127,7 +130,7 @@ class CloudManager {
     }
     
     private func _save(sentence: Sentence) -> Result<String, Error> {
-        let record = CKRecord(recordType: "KoreanEnglishSentence")
+        let record = CKRecord(recordType: recordType)
         record.setValuesForKeys([
             "id": sentence.id!,
             "createdAt": sentence.createdAt,

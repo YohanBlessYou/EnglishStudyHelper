@@ -1,11 +1,10 @@
 import SwiftUI
 
 struct StudyingView: View {
-    @State
-    private var korean: String = ""
-    
-    @State
-    private var english: String = ""
+    @State private var sentences: [Sentence] = SentenceManager.shared.all
+    @State private var studyingSentence: Sentence!
+    @State private var korean: String = ""
+    @State private var english: String = ""
     
     var body: some View {
         GeometryReader { geometry in
@@ -68,6 +67,9 @@ struct StudyingView: View {
                     Image(systemName: "ellipsis.circle")
                         .foregroundColor(.blue)
                 })
+            }.onAppear {
+                sentences = SentenceManager.shared.all
+                studyingSentence = sentences.randomElement()
             }
     }
 }

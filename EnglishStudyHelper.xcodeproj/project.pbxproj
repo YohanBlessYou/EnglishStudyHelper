@@ -22,6 +22,7 @@
 		601031E527E39F3B0034FBC5 /* UpdatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601031DD27E39F3B0034FBC5 /* UpdatingViewController.swift */; };
 		601031E627E39F3B0034FBC5 /* StudyingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601031DE27E39F3B0034FBC5 /* StudyingViewController.swift */; };
 		601031E727E39F3B0034FBC5 /* AddingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601031DF27E39F3B0034FBC5 /* AddingViewController.swift */; };
+		60132D4528276DED0054DE26 /* UpdatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60132D4428276DED0054DE26 /* UpdatingView.swift */; };
 		6033FAF127DA4737005A7537 /* NetworkRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6033FAF027DA4737005A7537 /* NetworkRequester.swift */; };
 		6033FAF327DA47A5005A7537 /* PapagoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6033FAF227DA47A5005A7537 /* PapagoManager.swift */; };
 		6033FAF527DA4F67005A7537 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6033FAF427DA4F67005A7537 /* UserInfo.swift */; };
@@ -69,6 +70,7 @@
 		601031DD27E39F3B0034FBC5 /* UpdatingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdatingViewController.swift; sourceTree = "<group>"; };
 		601031DE27E39F3B0034FBC5 /* StudyingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudyingViewController.swift; sourceTree = "<group>"; };
 		601031DF27E39F3B0034FBC5 /* AddingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddingViewController.swift; sourceTree = "<group>"; };
+		60132D4428276DED0054DE26 /* UpdatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatingView.swift; sourceTree = "<group>"; };
 		6033FAF027DA4737005A7537 /* NetworkRequester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequester.swift; sourceTree = "<group>"; };
 		6033FAF227DA47A5005A7537 /* PapagoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PapagoManager.swift; sourceTree = "<group>"; };
 		6033FAF427DA4F67005A7537 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 			children = (
 				60FFCA532801AE4B007907B2 /* AddingView.swift */,
 				600F227928229A8000EC4B49 /* StudyingView.swift */,
+				60132D4428276DED0054DE26 /* UpdatingView.swift */,
 				600F227B28229C8C00EC4B49 /* EditingView.swift */,
 				60452C5B280306B7007AEF8D /* MainView.swift */,
 				60452C5928030211007AEF8D /* TextView.swift */,
@@ -398,6 +401,7 @@
 				600F227C28229C8C00EC4B49 /* EditingView.swift in Sources */,
 				600F227A28229A8000EC4B49 /* StudyingView.swift in Sources */,
 				60452C5A28030211007AEF8D /* TextView.swift in Sources */,
+				60132D4528276DED0054DE26 /* UpdatingView.swift in Sources */,
 				601031E127E39F3B0034FBC5 /* ButtonStyleView.swift in Sources */,
 				60AAE29C27E771F60089BD08 /* UIConfig.swift in Sources */,
 				604A948F27D06927007CCCD5 /* Sentence.xcdatamodeld in Sources */,

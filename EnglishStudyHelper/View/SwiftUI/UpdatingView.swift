@@ -1,9 +1,11 @@
 import SwiftUI
 
-struct AddingView: View {
-    @Binding var showingAddingModal: Bool
-    @State private var korean: String = ""
-    @State private var english: String = ""
+struct UpdatingView: View {
+    @Binding var sentences: [Sentence]
+    @Binding var showingUpdatingModal: Bool
+    let editingSentenceID: String
+    @State var korean: String
+    @State var english: String
     @State private var showingAlert = false
     @State private var alertMessage = ""
     
@@ -19,11 +21,17 @@ struct AddingView: View {
                             return
                         }
                         
-                        SentenceManager.shared.create(korean: korean, english: english)
-                        showingAddingModal.toggle()
+                        SentenceManager.shared.update(
+                            id: editingSentenceID,
+                            korean: korean,
+                            english: english
+                        )
+                        showingUpdatingModal = false
+                        sentences = []
+                        sentences = SentenceManager.shared.all
                     },
                     label: {
-                        Text("추가하기")
+                        Text("수정하기")
                             .foregroundColor(Color.black)
                             .font(.title2)
                     })
@@ -103,3 +111,4 @@ struct AddingView: View {
         }
     }
 }
+

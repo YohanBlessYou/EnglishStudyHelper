@@ -65,6 +65,7 @@ extension SentenceManager {
             return
         }
         persistentContainer.viewContext.delete(sentence)
+        
         NotificationCenter.default.post(name: notificationName, object: nil)
     }
     
