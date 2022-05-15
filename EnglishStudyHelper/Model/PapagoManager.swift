@@ -13,13 +13,12 @@ class PapagoManager {
     
     private init() { }
     
-    func translate(korean: String, completion: @escaping (Result<Data, NetworkRequester.HTTPError>) -> ()) {
-        NetworkRequester.request(
+    func translate(korean: String) async throws -> Data {
+        return try await NetworkRequester.request(
             url: url,
             httpMethod: .POST,
             httpHeaders: httpHeaders,
-            httpBody: (httpBodyPrefix+korean).data(using: .utf8)!,
-            completion: completion
+            httpBody: (httpBodyPrefix+korean).data(using: .utf8)!
         )
     }
 }

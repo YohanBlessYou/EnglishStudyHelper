@@ -90,12 +90,11 @@ struct MainView: View {
                                 .confirmationDialog("", isPresented: $showingCloudActionsheet, titleVisibility: .automatic) {
                                     Button("업로드") {
                                         showingProgressView = true
-                                        
-                                        CloudManager.shared.save { result in
-                                            switch result {
-                                            case .success:
+                                        Task {
+                                            do {
+                                                try await CloudManager.shared.upload()
                                                 self.alertMessage = "업로드 성공"
-                                            case .failure(let error):
+                                            } catch {
                                                 self.alertMessage = "업로드 실패\n\(error.localizedDescription)"
                                             }
                                             self.showingAlert = true
@@ -104,12 +103,11 @@ struct MainView: View {
                                     }
                                     Button("다운로드") {
                                         showingProgressView = true
-                                        
-                                        CloudManager.shared.fetch { result in
-                                            switch result {
-                                            case .success:
+                                        Task {
+                                            do {
+                                                try await CloudManager.shared.download()
                                                 self.alertMessage = "다운로드 성공"
-                                            case .failure(let error):
+                                            } catch {
                                                 self.alertMessage = "다운로드 실패\n\(error.localizedDescription)"
                                             }
                                             self.showingAlert = true

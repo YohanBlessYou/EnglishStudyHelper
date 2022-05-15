@@ -58,30 +58,24 @@ struct UpdatingView: View {
                     )
                     .border(.gray, width: 1)
                 Button(action: {
-                    guard korean.count != 0 else {
-                        showingAlert.toggle()
-                        alertMessage = "번역할 한국어를 입력해주세요"
-                        return
-                    }
-                    
-                    PapagoManager.shared.translate(korean: korean) { result in
-                        switch result {
-                        case .success(let data):
+                    Task {
+                        guard korean.count != 0 else {
+                            showingAlert = true
+                            alertMessage = "번역할 한국어를 입력해주세요"
+                            return
+                        }
+                        
+                        do {
+                            let data = try await PapagoManager.shared.translate(korean: korean)
                             guard let response = try? JSONDecoder().decode(PapagoManager.Response.self, from: data) else {
-                                DispatchQueue.main.async {
-                                    showingAlert.toggle()
-                                    alertMessage = "JSON Parsing Error"
-                                }
+                                showingAlert = true
+                                alertMessage = "JSON Parsing Error"
                                 return
                             }
-                            DispatchQueue.main.async {
-                                english = response.message.result?.translatedText ?? ""
-                            }
-                        case .failure(let error):
-                            DispatchQueue.main.async {
-                                showingAlert.toggle()
-                                alertMessage = error.description
-                            }
+                            english = response.message.result?.translatedText ?? ""
+                        } catch {
+                            showingAlert = true
+                            alertMessage = error.localizedDescription
                         }
                     }
                 }, label: {

@@ -24,9 +24,8 @@ enum NetworkRequester {
         url: URL,
         httpMethod: HTTPMethod,
         httpHeaders: [String: String],
-        httpBody: Data,
-        completion: @escaping (Result<Data, HTTPError>) -> ()
-    ) {
+        httpBody: Data
+    ) async throws -> Data {
         var request = URLRequest(url: url)
         request.httpMethod = httpMethod.rawValue
         httpHeaders.forEach {
@@ -34,24 +33,11 @@ enum NetworkRequester {
         }
         request.httpBody = httpBody
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                completion(.failure(.URLSessionError(error)))
-                return
-            }
-            
-            guard let data = data,
-                  let response = response as? HTTPURLResponse else {
-                      return
-                  }
-            
-            
-            guard response.statusCode == 200 else {
-                completion(.failure(.badStatusCode(response.statusCode)))
-                return
-            }
-
-            completion(.success(data))
-        }.resume()
+        let (data, response) = try await URLSession.shared.data(for: request)
+        let _response = response as! HTTPURLResponse
+        guard _response.statusCode == 200 else {
+            throw HTTPError.badStatusCode(_response.statusCode)
+        }
+        return data
     }
 }
